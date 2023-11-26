@@ -2,26 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+* {
+  box-sizing: border-box;
 }
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+    --color-text: 0, 0, 0;
+    --color-primary: 23, 105, 170;
+    --color-on-primary: 255, 255, 255;
+    --color-primary-container: 240, 219, 255;
+    --color-on-primary-container: 44, 0, 81;
+    --color-secondary: 102, 90, 111;
+    --color-on-secondary: 255, 255, 255;
+    --color-secondary-container: 237, 221, 246;
+    --color-on-secondary-container: 33, 24, 42;
+    --color-error: 186, 26, 26;
+    --color-on-error: 255, 255, 255;
+    --color-error-container: 255, 218, 214;
+    --color-on-error-container: 65, 0, 2;
+    --color-background: 255, 251, 255;
+    --color-on-background: 29, 27, 30;
+    --color-surface: 255, 251, 255;
+    --color-on-surface: 29, 27, 30;
+    --color-surface-variant: 233, 223, 235;
+    --color-on-surface-variant: 74, 69, 78;
+    --color-surface-disabled: 29, 27, 30, 0.12;
+    --color-on-surface-disabled: 29, 27, 30, 0.38;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
+      --color-primary: 23, 105, 170;
+      --color-text: 0 , 0 , 0;
+      --color-on-primary: 71, 12, 122;
+      --color-primary-container: 95, 43, 146;
+      --color-on-primary-container: 240, 219, 255;
+      --color-secondary: 208, 193, 218;
+      --color-on-secondary: 54, 44, 63;
+      --color-secondary-ontainer: 77, 67, 87;
+      --color-on-secondary-container: 237, 221, 246;
+      --color-error: 255, 180, 171;
+      --color-on-error: 105, 0, 5;
+      --color-error-container: 147, 0, 10;
+      --color-on-error-container: 255, 180, 171;
+      --color-background: 29, 27, 30;
+      --color-on-background: 231, 225, 229;
+      --color-surface: 29, 27, 30;
+      --color-on-surface: 231, 225, 229;
+      --color-surface-variant: 74, 69, 78;
+      --color-on-surface-variant: 204, 196, 206;
+      --color-surface-disabled: 231, 225, 229, 0.12;
+      --color-on-surface-disabled: 231, 225, 229, 0.38;
+    }
   }
 }
-
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--color-text))
+  /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+}
+
+.custom-input-container {
+  @apply w-full p-4 bg-white rounded-lg flex items-center h-[48px];
+}
+.custom-input {
+  @apply w-full ml-2 pl-4 outline-none cursor-pointer text-sm;
+}
+
+.login-background {
+  background: #667db6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #667db6,
+    #0082c8,
+    #0082c8,
+    #667db6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #667db6,
+    #0082c8,
+    #0082c8,
+    #667db6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

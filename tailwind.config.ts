@@ -1,20 +1,40 @@
-import type { Config } from 'tailwindcss'
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  mode: "jit",
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
       },
+      colors: {
+        "black-100": "#2B2C35",
+        "primary": {
+          DEFAULT: 'rgb(var(--color-primary))',
+          100: "#F5F8FF",
+        },
+        "secondary": 'rgb(var(--color-secondary))',
+        "background": 'rgb(var(--color-background))',
+        "on-background": 'rgb(var(--color-on-background))',
+        "surface": 'rgb(var(--color-surface))',
+        "surface-varient": 'rgb(var(--color-surface-varient))',
+        "text": 'rgb(var(--color-text))',
+        "secondary-orange": "#f79761",
+        "light-white": {
+          DEFAULT: "rgba(59,60,152,0.03)",
+          100: "rgba(59,60,152,0.02)",
+        },
+        grey: "#747A88",
+      },
+      backgroundImage: {
+        'pattern': "url('/pattern.png')",
+        'hero-bg': "url('/hero-bg.png')"
+      }
     },
   },
   plugins: [],
-}
-export default config
+};
