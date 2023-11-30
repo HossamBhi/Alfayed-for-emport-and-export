@@ -19,6 +19,7 @@ export const ar = {
       "total": "اجمالي الخزنة",
       "products": "منتجات",
       "clients": "العملاء"
-    }
+    },
+    "total": "Total"
   },
 };

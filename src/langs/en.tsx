@@ -19,6 +19,7 @@ export const en = {
       "total": "Total",
       "products": "Products",
       "clients": "Clients"
-    }
+    },
+    "total": "Total"
   },
 };

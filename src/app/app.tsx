@@ -6,7 +6,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../redux/store";
-const App = ({ children }: { children: ReactNode }) => {
+const  App = ({ children }: { children: ReactNode }) => {
   const { i18n } = useTranslation();
   // const { isLoad } = useSelector((state: RootState) => state.appSettings);
   const [wait, setWait] = useState(true);
@@ -42,7 +42,7 @@ const App = ({ children }: { children: ReactNode }) => {
                   i18n.dir() === "rtl" ? "mr-20" : "ml-20"
                 }`}
               >
-                <PageHeader />
+                {/* <PageHeader /> */}
                 {children}
               </div>
             </>

@@ -16,7 +16,7 @@ const ExpensesCard = ({ item }: any) => {
       </Box>
 
       <div className="flex-1 px-4">
-        <p className="text-sm text-black">{item.name.first}</p>
+        <p className="text-sm text-black">{item.name}</p>
         <p className="text-xs text-gray-500">Category name</p>
       </div>
 

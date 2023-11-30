@@ -2,5 +2,6 @@ import CustomDialog from "./CustomDialog";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import CustomSelect from "./CustomSelect";
+import CustomTable from "./CustomTable";
 
-export { CustomDialog, CustomInput, CustomButton, CustomSelect };
+export { CustomDialog, CustomInput, CustomButton, CustomSelect, CustomTable };

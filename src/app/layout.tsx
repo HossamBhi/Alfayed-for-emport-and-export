@@ -7,8 +7,8 @@ import Provider from "./Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "الفايد للإصتراد والتصدير",
-  description: "الفايد للإصتراد والتصدير dashboard",
+  title: "الفايد للاستيراد والتصدير",
+  description: "الفايد للاستيراد والتصدير dashboard",
 };
 
 export default function RootLayout({

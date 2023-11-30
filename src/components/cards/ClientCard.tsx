@@ -16,7 +16,7 @@ const ClientCard = ({ item }: any) => {
       </Box>
 
       <div className="flex-1 px-4">
-        <p className="text-sm text-gray-800">{item.name.first}</p>
+        <p className="text-sm text-gray-800">{item.name}</p>
       </div>
 
       <div className="">

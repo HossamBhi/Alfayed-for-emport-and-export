@@ -1,10 +1,7 @@
 export const DATA = [
   {
     id: 1,
-    name: {
-      first: "John",
-      last: "Smith",
-    },
+    name: "السيد عبد الفتاح",
     total: 2795.95,
     status: "On Hold",
     method: "PayPal",
@@ -12,10 +9,7 @@ export const DATA = [
   },
   {
     id: 2,
-    name: {
-      first: "Chris",
-      last: "Adams",
-    },
+    name: "محمد الصياد",
     total: 1195.95,
     status: "Processing",
     method: "PayPal",
@@ -23,10 +17,7 @@ export const DATA = [
   },
   {
     id: 3,
-    name: {
-      first: "Sarah",
-      last: "Smith",
-    },
+    name: "محمد الشامي",
     total: 495.85,
     status: "Completed",
     method: "Visa",
@@ -34,10 +25,7 @@ export const DATA = [
   },
   {
     id: 4,
-    name: {
-      first: "Joseph",
-      last: "Choo",
-    },
+    name: "سعد عجوه",
     total: 150.45,
     status: "Processing",
     method: "MasterCard",
@@ -45,10 +33,7 @@ export const DATA = [
   },
   {
     id: 5,
-    name: {
-      first: "Steve",
-      last: "Harding",
-    },
+    name: "مزارع شبل",
     total: 175.25,
     status: "On Hold",
     method: "PayPal",
@@ -56,10 +41,7 @@ export const DATA = [
   },
   {
     id: 6,
-    name: {
-      first: "Laura",
-      last: "Croft",
-    },
+    name: "علي هاشم",
     total: 1295.75,
     status: "Completed",
     method: "Check",
@@ -67,10 +49,7 @@ export const DATA = [
   },
   {
     id: 7,
-    name: {
-      first: "Michael",
-      last: "Jones",
-    },
+    name: "السيد البحيري",
     total: 89.95,
     status: "Completed",
     method: "MasterCard",
@@ -78,10 +57,7 @@ export const DATA = [
   },
   {
     id: 8,
-    name: {
-      first: "James",
-      last: "Bond",
-    },
+    name: "أحمد عبد الحفيظ العبور",
     total: 689.45,
     status: "Completed",
     method: "Visa",
@@ -89,10 +65,7 @@ export const DATA = [
   },
   {
     id: 9,
-    name: {
-      first: "Haley",
-      last: "Whiting",
-    },
+    name: "إبراهيم عبد النبي",
     total: 14.99,
     status: "Completed",
     method: "PayPal",
@@ -100,10 +73,7 @@ export const DATA = [
   },
   {
     id: 10,
-    name: {
-      first: "Tim",
-      last: "Thomas",
-    },
+    name: "أبو سعيد",
     total: 218.99,
     status: "Completed",
     method: "MasterCard",
