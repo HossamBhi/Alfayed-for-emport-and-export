@@ -9,7 +9,7 @@ export const ar = {
     "expensesCategoryName": "اسم فئة المصاريف",
     "addExpensesCategory": "إضافة فئة المصروفات",
     "farmsAndFarmers": "المزارع والموردين",
-    "expenses": "مصروفات",
+   
     "clients": "العملاء",
     "addClient": "إضافة عميل",
     "clientName": "اسم العميل",
@@ -34,7 +34,8 @@ export const ar = {
       "total": "اجمالي الخزنة",
       "products": "منتجات",
       "clients": "العملاء",
-      "fridge": "ثلاجة"
+      "fridge": "ثلاجة",
+      "expenses": "المصروفات",
     },
     "AddToStock": {
       "name": "اسم المورد",

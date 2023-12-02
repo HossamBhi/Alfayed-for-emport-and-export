@@ -9,7 +9,6 @@ export const en = {
     "expensesCategoryName": "Expenses Category Name",
     "addExpensesCategory": "Add Expenses Category",
     "farmsAndFarmers": "Farms And Suppliers",
-    "expenses": "Expenses",
     "clients": "Clients",
     "addClient": "Add Client",
     "clientName": "Client Name",
@@ -34,7 +33,8 @@ export const en = {
       "total": "Total",
       "products": "Products",
       "clients": "Clients",
-      "fridge": "Fridge"
+      "fridge": "Fridge",
+      "expenses": "Expenses",
     },
     "AddToStock": {
       "name": "farm Name",

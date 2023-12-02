@@ -8,7 +8,7 @@ const Expenses = () => {
   const { t } = useTranslation();
   return (
     <CardsContainer
-      title={t("expenses")}
+      title={t("dashboard.expenses")}
       titleButton={<AddExpenses />}
       items={DATA}
       Card={ExpensesCard}
