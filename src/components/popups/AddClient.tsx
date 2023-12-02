@@ -29,7 +29,7 @@ const AddClient = ({ onClose }: AddClientProps) => {
             label={t("clientName")}
             type="text"
             fullWidth
-            variant="standard"
+            
           />
         </DialogContent>
         <DialogActions>

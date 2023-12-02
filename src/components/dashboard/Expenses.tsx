@@ -8,12 +8,8 @@ const Expenses = () => {
   const { t } = useTranslation();
   return (
     <CardsContainer
-      title={
-        <>
-          {t("expenses")}
-          <AddExpenses />
-        </>
-      }
+      title={t("expenses")}
+      titleButton={<AddExpenses />}
       items={DATA}
       Card={ExpensesCard}
     />

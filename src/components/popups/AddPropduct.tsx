@@ -31,7 +31,6 @@ const AddPropduct = ({ onClose }: AddPropductProps) => {
             label={t("productName")}
             type="text"
             fullWidth
-            variant="standard"
           />
         </DialogContent>
         <DialogActions>

@@ -4,6 +4,7 @@ import { createDataColumns } from "@/utils/helper";
 import { Button, Tooltip } from "@mui/material";
 import {
   DataGrid,
+  DataGridProps,
   GridActionsCellItem,
   GridColDef,
   GridRowId,
@@ -15,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import { AiFillEdit } from "react-icons/ai";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 
-const CustomTable = () => {
+const CustomTable = ({ rows, ...props }: DataGridProps) => {
   const { t } = useTranslation();
   const router = useRouter();
   const handleEditRecord = (id: GridRowId) => {
@@ -124,8 +125,8 @@ const CustomTable = () => {
       </Button> */}
       <div style={{ width: "100%" }} className="h-[80vh]">
         <DataGrid
-          rows={DATA}
-          columns={createDataColumns(DATA, t) || []}
+          rows={rows}
+        //   columns={createDataColumns(DATA, t)}
           {...{ rowLength: 5 }}
           slots={{ toolbar: GridToolbar }}
           slotProps={{ toolbar: { showQuickFilter: true } }}
@@ -137,6 +138,7 @@ const CustomTable = () => {
               },
             },
           }}
+          {...props}
         />
       </div>
     </div>

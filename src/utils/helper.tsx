@@ -1,59 +1,38 @@
 import { TFunction } from "i18next";
-import {
-  AiFillPlusCircle,
-  AiFillShop,
-  AiOutlinePlusCircle,
-  AiOutlinePullRequest,
-  AiOutlineShop,
-} from "react-icons/ai";
-import { BsDatabaseAdd, BsDatabaseFillAdd } from "react-icons/bs";
-import { HiOutlineShoppingBag } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
-import { RiSettings3Fill, RiSettings3Line } from "react-icons/ri";
-import { RxDashboard } from "react-icons/rx";
+import { BsInboxes, BsInboxesFill } from "react-icons/bs";
+import { MdAddCircle, MdAddCircleOutline } from "react-icons/md";
+import { RiBankFill, RiBankLine } from "react-icons/ri";
 
 export const SIDEMENU_LINKS = [
   {
-    title: "Dashboard",
-    url: "/",
-    InActiveIcon: RxDashboard,
-    ActiveIcon: MdDashboard,
+    title: "addToStock",
+    url: "/add-to-stock",
+    InActiveIcon: MdAddCircleOutline,
+    ActiveIcon: MdAddCircle,
   },
-  // {
-  //   title: "Add Products",
-  //   url: "/add-products",
-  //   InActiveIcon: AiOutlinePlusCircle,
-  //   ActiveIcon: AiFillPlusCircle,
-  // },
-  // {
-  //   title: "Products",
-  //   url: "/products",
-  //   InActiveIcon: AiOutlineShop,
-  //   ActiveIcon: AiFillShop,
-  // },
-  // {
-  //   title: "Requested Products",
-  //   url: "/requested-products",
-  //   InActiveIcon: BsDatabaseAdd,
-  //   ActiveIcon: BsDatabaseFillAdd,
-  // },
-  // {
-  //   title: "Settings",
-  //   url: "/settings",
-  //   InActiveIcon: RiSettings3Line,
-  //   ActiveIcon: RiSettings3Fill,
-  // },
+  {
+    title: "stock",
+    url: "/stock",
+    InActiveIcon: BsInboxes,
+    ActiveIcon: BsInboxesFill,
+  },
+  {
+    title: "accounts",
+    url: "/accounts",
+    InActiveIcon: RiBankLine,
+    ActiveIcon: RiBankFill,
+  },
 ];
 
 export const createDataColumns = (
   data: any[],
-  t: TFunction<"translation", undefined>
+  t: (s: string) => void
 ): {
   field: string;
   headerName: string;
   width: number;
 }[] => {
-  const keys = Object.keys(data[0]);
+  const keys = Object?.keys(data[0]);
   const result = keys.reduce((prev: any, curr) => {
     return [
       ...prev,
@@ -61,10 +40,17 @@ export const createDataColumns = (
         {
           field: curr,
           headerName: t(curr + "") + "",
-          width: 150,
+          width: 100,
         },
       ],
     ];
   }, []);
   return result;
+};
+
+export const formatDate = (date: Date) => {
+  // "2023-11-16"
+  const d = new Date(date);
+  return `${d.toISOString().substring(0, 10)}`;
+  // return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 };

@@ -44,20 +44,23 @@ const AddExpenses = ({ onClose }: AddExpensesProps) => {
       <CustomDialog open={showAddProduct} onClose={handleOnCloseAddProduct}>
         <DialogTitle>{t("addExpenses")}</DialogTitle>
         <DialogContent sx={{ width: "100%" }}>
-          <CustomInput
-            autoFocus
-            margin="dense"
-            id="name"
-            label={t("expensesName")}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <CustomInput
+              autoFocus
+              margin="dense"
+              id="name"
+              label={t("expensesName")}
+              type="text"
+              fullWidth
+              // variant="standard"
+            />
+          </FormControl>
           <CustomSelect
             label={t("expenseCategroy")}
             items={EXPENSES_CATEGORIES}
             value={age}
             onChange={handleChange}
+            // variant="standard"
           />
         </DialogContent>
         <DialogActions>

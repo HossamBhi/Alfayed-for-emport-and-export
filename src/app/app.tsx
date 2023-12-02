@@ -42,7 +42,7 @@ const  App = ({ children }: { children: ReactNode }) => {
                   i18n.dir() === "rtl" ? "mr-20" : "ml-20"
                 }`}
               >
-                {/* <PageHeader /> */}
+                <PageHeader />
                 {children}
               </div>
             </>

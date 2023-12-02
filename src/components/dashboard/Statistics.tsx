@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { FaPoundSign, FaUsers } from "react-icons/fa";
 import { FaBoxesStacked } from "react-icons/fa6";
+import { RiFridgeFill } from "react-icons/ri";
 
 type StatisticCardProps = {
   price: number;
@@ -30,7 +31,7 @@ const Statistics = () => {
     []
   );
   return (
-    <div className="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div className="p-4 grid grid-cols-1 lg:grid-cols-4 gap-4">
       <StatisticCard
         price={100000}
         label={t("dashboard.total")}
@@ -44,10 +45,16 @@ const Statistics = () => {
         color="blue"
       />
       <StatisticCard
-        price={300}
+        price={10}
         label={t("dashboard.products")}
         Icon={FaBoxesStacked}
         color="purple"
+      />
+       <StatisticCard
+        price={5}
+        label={t("dashboard.fridge")}
+        Icon={RiFridgeFill}
+        color="blue"
       />
     </div>
   );

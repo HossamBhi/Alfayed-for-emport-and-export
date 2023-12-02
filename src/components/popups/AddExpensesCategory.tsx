@@ -31,7 +31,6 @@ const AddExpensesCategory = ({ onClose }: AddExpensesCategoryProps) => {
             label={t("expensesCategoryName")}
             type="text"
             fullWidth
-            variant="standard"
           />
         </DialogContent>
         <DialogActions>

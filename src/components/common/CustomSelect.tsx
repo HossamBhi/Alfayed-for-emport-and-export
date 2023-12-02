@@ -9,7 +9,13 @@ import React from "react";
 
 type CustomSelectProps = {
   label: string;
-  items: { value: number | string; label: string }[];
+
+  items: {
+    id?: number | string;
+    name?: string;
+    value?: number | string;
+    label?: string;
+  }[];
 };
 
 const CustomSelect = ({
@@ -18,11 +24,19 @@ const CustomSelect = ({
   ...props
 }: SelectProps & CustomSelectProps) => {
   return (
-    <FormControl fullWidth variant="standard">
+    <FormControl fullWidth>
       <InputLabel id={label}>{label}</InputLabel>
-      <Select labelId={label} id={label} label={label} {...props}>
-        {items.map((item) => (
-          <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+      <Select
+        variant="outlined"
+        labelId={label}
+        id={label}
+        label={label}
+        {...props}
+      >
+        {items.map((item, i) => (
+          <MenuItem key={item.value || item.id ||  i} value={item.value || item.id}>
+            {item.label || item.name}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

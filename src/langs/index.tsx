@@ -24,7 +24,7 @@ i18n
 
 export const LANGUAGES = [
   { label: "En", code: "en", direction: "ltr" },
-  { label: "Ar", code: "ar", direction: "rtl" },
+  { label: "ع", code: "ar", direction: "rtl" },
 ];
 
 export default i18n;
