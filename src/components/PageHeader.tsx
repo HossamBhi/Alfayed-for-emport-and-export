@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const PageHeader = () => {
   const pathname = usePathname();
   const { t } = useTranslation();
-  // const profile = useSelector((state: RootState) => state.auth);
+  // const profile = useSelector((state: RootState) => state.user);
 
   const title = SIDEMENU_LINKS.find((item) => item.url === pathname)?.title;
   if (pathname.includes("/login") || !title) {

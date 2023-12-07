@@ -1,43 +1,100 @@
 "use client";
+import { useApi } from "@/hooks";
+import { clientProps } from "@/utils/types";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BsFillPlusCircleFill } from "react-icons/bs";
-import { CustomButton, CustomDialog, CustomInput } from "../common";
 import { PopupButton } from ".";
+import { CustomButton, CustomDialog, CustomInput } from "../common";
+import { CLIENT } from "@/utils/endpoints";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 
 type AddClientProps = {
   onClose?: () => void;
+  show?: boolean;
+  hideShowBtn?: boolean;
+  editData?: any;
+  showButtonTitle?: boolean;
+  setEditData?: (d: clientProps) => void;
 };
 
-const AddClient = ({ onClose }: AddClientProps) => {
+const AddClient = ({
+  onClose,
+  show,
+  hideShowBtn = false,
+  editData,
+  showButtonTitle,
+  setEditData,
+}: AddClientProps) => {
+  const { post, put } = useApi();
   const { t } = useTranslation();
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [name, setName] = useState(editData?.name ? editData?.name : "");
   const handleOnCloseAddProduct = () =>
     onClose ? onClose : setShowAddProduct(false);
+
+  const callAPI = () => {
+    if (editData) {
+      put({
+        url: CLIENT.update,
+        data: { name },
+        params: { id: editData.id },
+      }).then((res) => {
+        console.log("Update Cleint: ", res);
+        if (res?.id) {
+          setEditData && setEditData(res);
+        }
+      });
+    } else {
+      post({ url: CLIENT.add, data: { name } }).then((res) => {
+        console.log("Update Cleint: ", res);
+      });
+
+      setName("");
+    }
+  };
   return (
     <div>
-      <PopupButton onClick={() => setShowAddProduct(true)} />
-      
-      <CustomDialog open={showAddProduct} onClose={handleOnCloseAddProduct}>
-        <DialogTitle>{t("addClient")}</DialogTitle>
+      {!hideShowBtn && (
+        <PopupButton onClick={() => setShowAddProduct(true)}>
+          {showButtonTitle && (
+            <>
+              <BsFillPlusCircleFill className="ltr:mr-4 rtl:ml-4" />{" "}
+              {t("client.addClient")}
+            </>
+          )}
+        </PopupButton>
+      )}
+      <CustomDialog
+        open={show != undefined ? show : showAddProduct}
+        onClose={handleOnCloseAddProduct}
+      >
+        <DialogTitle>
+          {editData ? t("client.editClient") : t("client.addClient")}
+        </DialogTitle>
         <DialogContent sx={{ width: "100%" }}>
           <CustomInput
             autoFocus
             margin="dense"
             id="name"
-            label={t("clientName")}
+            label={t("client.clientName")}
             type="text"
             fullWidth
-            
+            value={name}
+            onChange={({ target }) => setName(target.value)}
           />
         </DialogContent>
         <DialogActions>
           <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("close")}
+            {t("common.close")}
           </CustomButton>
-          <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("save")}
+          <CustomButton
+            onClick={() => {
+              callAPI();
+              handleOnCloseAddProduct();
+            }}
+          >
+            {editData ? t("common.edit") : t("common.save")}
           </CustomButton>
         </DialogActions>
       </CustomDialog>

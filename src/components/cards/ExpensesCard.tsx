@@ -27,7 +27,7 @@ const ExpensesCard = ({ item, containerStyle }: ExpensesCardProps) => {
 
       <div className="flex-1 px-4">
         <p className="text-sm text-black">{item.name}</p>
-        <p className="text-xs text-gray-500">Category name</p>
+        <p className="text-xs text-gray-500">{item.expenseTypeName}</p>
       </div>
 
       <div className="">

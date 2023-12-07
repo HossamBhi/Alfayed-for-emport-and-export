@@ -21,9 +21,8 @@ const CustomTable = ({ rows, ...props }: DataGridProps) => {
   const router = useRouter();
   const handleEditRecord = (id: GridRowId) => {
     console.log({ id });
-    router.push(`/add-products?id=${id}`);
+    router.push(`/add-to-stock?id=${id}`);
   };
-  console.log({ showme: createDataColumns(DATA, t) });
   //   const columns: GridColDef[] = [
   //     {
   //       field: "image",

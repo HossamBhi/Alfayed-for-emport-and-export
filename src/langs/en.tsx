@@ -1,18 +1,15 @@
 export const en = {
   translation: {
     "addPropduct": "Add Propduct",
-    "save": "Save",
-    "close": "Close",
-    "edit": "Edit",
-    "addExpenses": "Add Expenses",
-    "expensesName": "Expenses Name",
-    "expensesCategoryName": "Expenses Category Name",
-    "addExpensesCategory": "Add Expenses Category",
     "farmsAndFarmers": "Farms And Suppliers",
-    "clients": "Clients",
-    "addClient": "Add Client",
-    "clientName": "Client Name",
-    "expenseCategroy": "Categroy",
+    "common": {
+      "total": "Total",
+      "typeSomething": "Type Something...",
+      "searchIn": "Search in ",
+      "save": "Save",
+      "close": "Close",
+      "edit": "Edit",
+    },
     "menu": {
       "addToStock": "Add To Stock",
       "stock": "Stock",
@@ -24,10 +21,18 @@ export const en = {
       "editFarm": "Edit Supplier",
       "farmName": "Supplier Name",
     },
-    "common": {
-      "total": "Total",
-      "typeSomething": "Type Something...",
-      "searchIn": "Search in "
+    "expenses": {
+      "expenseCategroy": "Categroy",
+      "addExpense": "Add Expenses",
+      "expensesName": "Expenses Name",
+      "expensesCategoryName": "Expenses Category Name",
+      "addExpensesCategory": "Add Expenses Category",
+    },
+    "client": {
+      "editClient": "Edit Client",
+      "clientName": "Client Name",
+      "addClient": "Add Client",
+      "clients": "Clients",    
     },
     "dashboard": {
       "total": "Total",
@@ -55,7 +60,38 @@ export const en = {
       "addProduct": "Add New Product",
       "editProduct": "Edit Product",
       "id": "ID",
-
+      "additionalPrice": "Additional Price",
+      "additionalNotes": "Additional Notes",
+      "expenses": "Expenses",
+      "expenseDate": "Expense Date",
+      "subTotal": "Subtotal",
+      "value": "value",
+      "addExpenseOnProduct": "Add Expense On Product"
+    },
+    "supplierTable": {
+      "farmsName": "farm Name",
+      "carNumber": "Car Number",
+      "supplyDate": "Date",
+      "created_Date": "Created Date",
+      "product": "Product",
+      "number": "Number",
+      "quantity": "Quantity",
+      "discount": "Discount",
+      "netQuantity": "Net Quantity",
+      "price": "Price",
+      "paied": "Payed",
+      "remaining": "Remaining",
+      "total": "Total",
+      "farmsNotes": "Note",
+      "save": "Save",
+      "edit": "Edit",
+      "addProduct": "Add New Product",
+      "editProduct": "Edit Product",
+      "id": "ID",
+      "farmsID": "ID",
+      "productID": "Product ID",
+      "productName": "Product Name",
+      "farmRecordID": "#"
     }
   },
 };

@@ -51,6 +51,19 @@ const UserCard = ({
             <FaEdit color="#fff" size="12" />
           </Box>
         )}
+        {/* <Box
+          onClick={() => onEdit && onEdit(item)}
+          className="absolute top-[-10px] right-[-10px] rounded-full p-1 z-10 cursor-pointer"
+          sx={{
+            backgroundColor: primary.main,
+            borderWidth: 2,
+            borderColor: "#fff",
+            fontSize: 12,
+            color: "#fff",
+          }}
+        >
+          {item.id}
+        </Box> */}
         <Icon size="28" color={primary.main} />
       </Box>
 
@@ -58,9 +71,9 @@ const UserCard = ({
         <p className="text-sm text-gray-800">{item.name}</p>
       </div>
 
-      <div className="">
+      <div className="text-center">
         <p className="text-gray-400 text-sm">{t("common.total")}</p>
-        <p className="font-bold text-lg">{item.total}</p>
+        <p className="font-bold text-lg">{item.total || 0}</p>
       </div>
     </div>
   );

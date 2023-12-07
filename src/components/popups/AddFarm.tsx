@@ -1,10 +1,13 @@
 "use client";
+import { useApi } from "@/hooks";
+import { SUPPLIERS } from "@/utils/endpoints";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import { CustomButton, CustomDialog, CustomInput } from "../common";
 import { PopupButton } from ".";
+import { CustomButton, CustomDialog, CustomInput } from "../common";
+import { supplierProps } from "@/utils/types";
 
 type AddFarmProps = {
   onClose?: () => void;
@@ -12,6 +15,7 @@ type AddFarmProps = {
   hideShowBtn?: boolean;
   editData?: any;
   showButtonTitle?: boolean;
+  setEditData?: (d: supplierProps) => void;
 };
 
 const AddFarm = ({
@@ -20,7 +24,9 @@ const AddFarm = ({
   hideShowBtn = false,
   editData,
   showButtonTitle,
+  setEditData,
 }: AddFarmProps) => {
+  const { post, put } = useApi();
   const { t } = useTranslation();
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [name, setName] = useState(editData?.name ? editData?.name : "");
@@ -29,9 +35,23 @@ const AddFarm = ({
 
   const callAPI = () => {
     if (editData) {
-      alert("Update data");
+      put({
+        url: SUPPLIERS.update,
+        data: { name },
+        params: { id: editData.id },
+      }).then((res) => {
+        console.log("Update Supplier: ", res);
+        if (res?.id) {
+          setEditData && setEditData(res);
+        }
+      });
+      
     } else {
-      alert("Add data");
+      post({ url: SUPPLIERS.add, data: { name } }).then((res) => {
+        console.log("Get Supplier: ", res);
+      });
+
+      setName("");
     }
   };
 
@@ -68,7 +88,7 @@ const AddFarm = ({
         </DialogContent>
         <DialogActions>
           <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("close")}
+            {t("common.close")}
           </CustomButton>
           <CustomButton
             onClick={() => {
@@ -76,7 +96,7 @@ const AddFarm = ({
               handleOnCloseAddProduct();
             }}
           >
-            {editData ? t("edit") : t("save")}
+            {editData ? t("common.edit") : t("common.save")}
           </CustomButton>
         </DialogActions>
       </CustomDialog>

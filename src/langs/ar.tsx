@@ -1,19 +1,15 @@
 export const ar = {
   translation: {
     "addPropduct": "إضافة منتج",
-    "save": "حفظ",
-    "close": "إغلاق",
-    "edit": "تعديل",
-    "addExpenses": "أضف المصروفات",
-    "expensesName": "اسم المصروفات",
-    "expensesCategoryName": "اسم فئة المصاريف",
-    "addExpensesCategory": "إضافة فئة المصروفات",
     "farmsAndFarmers": "المزارع والموردين",
-   
-    "clients": "العملاء",
-    "addClient": "إضافة عميل",
-    "clientName": "اسم العميل",
-    "expenseCategroy": "الصنف",
+    "common": {
+      "total": "صافي الحساب",
+      "typeSomething": "اكتب شي",
+      "searchIn": "ابحث في ",
+      "save": "حفظ",
+      "close": "إغلاق",
+      "edit": "تعديل",
+    },
     "menu": {
       "addToStock": "أضف إلى المخزون",
       "stock": "مخزون",
@@ -25,10 +21,18 @@ export const ar = {
       "farmName": "اسم المورد",
       "addSupplier": "إضافة مورد"
     },
-    "common": {
-      "total": "صافي الحساب",
-      "typeSomething": "اكتب شي",
-      "searchIn": "ابحث في "
+    "expenses": {
+      "expenseCategroy": "الصنف",
+      "addExpense": "إضافة مصروف",
+      "expensesName": "اسم المصروفات",
+      "expensesCategoryName": "اسم فئة المصاريف",
+      "addExpensesCategory": "إضافة فئة المصروفات",
+    },
+    "client": {
+      "editClient": "تعديل العميل",
+      "clients": "العملاء",
+      "addClient": "إضافة عميل",
+      "clientName": "اسم العميل",
     },
     "dashboard": {
       "total": "اجمالي الخزنة",
@@ -56,6 +60,38 @@ export const ar = {
       "addProduct": "إضافة منتج جديد",
       "editProduct": "تعديل المنتج",
       "id": "#",
+      "additionalPrice": "مبلغ اضافي",
+      "additionalNotes": "وصف المبلغ الاضافي",
+      "expenses": "المصروفات",
+      "expenseDate": "تاريخ المصروف",
+      "subTotal": "المبلغ",
+      "value": "القيمه",
+      "addExpenseOnProduct": "اضافه مصروف علي المتنج"
+    },
+    "supplierTable": {
+      "farmsName": "اسم المورد",
+      "carNumber": "رقم السياره",
+      "supplyDate": "التاريخ",
+      "created_Date": "تاريخ الإنشاء",
+      "product": "المنتج",
+      "number": "العدد",
+      "quantity": "الكميه",
+      "discount": "السماح",
+      "netQuantity": "صافي الكمية",
+      "price": "السعر",
+      "paied": "مدفوع",
+      "remaining": "متبقي",
+      "farmsNotes": "ملحوظة",
+      "total": "الاجمالي",
+      "save": "حفظ",
+      "edit": "تعديل",
+      "addProduct": "إضافة منتج جديد",
+      "editProduct": "تعديل المنتج",
+      "id": "#",
+      "farmsID": "#",
+      "productID": "منتج ID",
+      "productName": "اسم المنتج",
+      "farmRecordID": "#"
     }
   },
 };

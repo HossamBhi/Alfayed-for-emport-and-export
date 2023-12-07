@@ -2,23 +2,89 @@
 import { UserCard } from "@/components/cards";
 import { CustomTable } from "@/components/common";
 import { AddFarm } from "@/components/popups";
-import { DATA } from "@/data";
-import { createDataColumns } from "@/utils/helper";
+import { useApi } from "@/hooks";
+import { SUPPLIERS } from "@/utils/endpoints";
+import { createDataColumns, formatDate } from "@/utils/helper";
+import { supplierDataProps, supplierProps } from "@/utils/types";
 import { LinearProgress } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GiFarmer } from "react-icons/gi";
 
 export default function Home() {
   const { t } = useTranslation();
-  const searchQuiry = new URLSearchParams(window.location.search);
-  const id = searchQuiry.get("id");
-  const router = useRouter();
   const [showEdit, setShowEdit] = useState(false);
-  
-  if (id === null) {
+  const [id, setId] = useState<null | string>(null);
+  const { get } = useApi();
+  const [supplier, setSupplier] = useState<null | supplierProps>(null);
+  const [supplierData, setSupplierData] = useState<null | supplierDataProps[]>(
+    null
+  );
+  // console.log({ supplier, error });
+  useEffect(() => {
+    const searchQuiry = new URLSearchParams(window.location.search);
+    const ID = searchQuiry.get("id");
+    if (ID != null) {
+      // getSupplier({ id: Number(ID) });
+      setId(ID);
+      get({ url: SUPPLIERS.getById, params: { id: ID } }).then((res) => {
+        console.log("farm data", { res });
+        // if (Array.isArray(res)) {
+        if (!res.status) {
+          setSupplier(res);
+        } else {
+          alert("Error " + res.status + ": " + res.data);
+        }
+      });
+      get({ url: SUPPLIERS.getAllRecords, params: { farmid: ID } }).then(
+        (res) => {
+          console.log("farm recorders", { res });
+          if (!res.status && res.farmRecords) {
+            setSupplierData(res.farmRecords);
+          } else {
+            setSupplierData([]);
+            if (res.status != 404)
+              alert("Error " + res.status + ": " + res.data);
+          }
+        }
+      );
+    }
+  }, [window.location]);
+
+  const columns: GridColDef[] =
+    !supplierData || supplierData?.length <= 0
+      ? []
+      : createDataColumns(supplierData[0], (s: string) =>
+          t("supplierTable." + s)
+        );
+
+  const customeColumns = useMemo(() => {
+    return columns
+      .filter(
+        (col) =>
+          col.field !== "farmsID" &&
+          col.field !== "productID" &&
+          col.field !== "created_Date"
+      )
+      .map((col) =>
+        col.field === "supplyDate"
+          ? {
+              ...col,
+              valueFormatter: (params: any) => formatDate(params.value),
+              width: 150,
+              type: "date",
+              align: "center",
+              headerAlign: "center",
+            }
+          : col.field === "farmsNotes"
+          ? { ...col, width: 200 }
+          : col
+      );
+  }, [columns]);
+
+  if (id === null || !supplier || !supplierData) {
     return (
       <main className="flex min-h-screen flex-col">
         <LinearProgress
@@ -29,11 +95,6 @@ export default function Home() {
     );
   }
 
-  const item = DATA.find((item) => item.id == (searchQuiry.get("id") || 0));
-  const columns: GridColDef[] = createDataColumns(
-    item?.data || [],
-    (s: string) => t("AddToStock." + s)
-  );
   // [
   //   {
   //     field: "nameEn",
@@ -64,30 +125,35 @@ export default function Home() {
   //     },
   //   },
   // ];
-  
+
   return (
     <main className="flex min-h-screen flex-col p-4">
       <div className="m-0">
-        {searchQuiry.get("id") != null && (
+        {id != null && (
           <UserCard
-            item={item}
+            item={supplier}
             containerStyle={"bg-white hover:bg-white mt-0"}
             showEdit
-            onClick={(item) => router.push("farm-details?id=" + item.id)}
             Icon={GiFarmer}
             onEdit={() => setShowEdit(true)}
+            onClick={() => setShowEdit(true)}
           />
         )}
         <AddFarm
           hideShowBtn={true}
-          editData={item}
+          editData={supplier}
+          setEditData={(data) => setSupplier(data)}
           show={showEdit}
           onClose={() => setShowEdit(false)}
         />
       </div>
 
       <div className="grid grid-cols-1">
-        <CustomTable rows={item?.data || []} columns={columns} />
+        <CustomTable
+          rows={supplierData || []}
+          columns={customeColumns as any}
+          getRowId={(item) => item.farmRecordID}
+        />
       </div>
     </main>
   );

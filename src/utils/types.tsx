@@ -1,27 +1,45 @@
-type farmDataProps = {
-  FarmsID: number;
-  FarmsName: string;
-  SupplyDate: Date;
-  Quantity: number;
-  Discount: string;
-  NetQuantity: number;
-  TotalPrice: number;
-  Paied: number;
-  Remaining: number;
-  FarmsNotes: string;
-  Store: string;
+export type productProps = {
+  productID: number;
+  productName: string;
+  productUnitPrice: number;
+  productNote: string;
+  created_Date: Date | string;
 };
 
-type supplierDetailsProps = {
+export type supplierProps = {
   id: number;
   name: string;
-  date: Date | string;
+  total: string;
+  date?: Date | string;
 };
 
-type ProductProps = {
-  ProductID: number;
-  ProductName: string;
-  ProductUnitPrice: number;
-  ProductNote: string;
-  Created_Date: Date | string;
+export type supplierDataProps = {
+  carNumber: string;
+  created_Date: null | Date;
+  discount: Number;
+  farmsID: Number;
+  farmsName: String;
+  farmsNotes: String;
+  netQuantity: null | number;
+  paied: number;
+  price: number;
+  productID: number;
+  productName: String;
+  quantity: number;
+  remaining: Number;
+  supplyDate: Date;
+  total: number;
+};
+export type expenseProps = {
+  id: number;
+  name: string;
+  total: string;
+  date?: Date | string;
+};
+
+export type clientProps = {
+  id: number;
+  name: string;
+  total: string;
+  date?: Date | string;
 };

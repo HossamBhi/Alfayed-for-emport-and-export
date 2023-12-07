@@ -1,21 +1,71 @@
 "use client";
 import { PageHeader, SideMenu } from "@/components";
-import { CircularProgress } from "@mui/material";
+import { useApi } from "@/hooks";
+import { saveClientsAction } from "@/redux/clients";
+import { saveExpensesAction } from "@/redux/expenses";
+import { saveSuppliersAction } from "@/redux/suppliers";
+import { CLIENT, EXPENSES, SUPPLIERS } from "@/utils/endpoints";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../redux/store";
-const  App = ({ children }: { children: ReactNode }) => {
+const App = ({ children }: { children: ReactNode }) => {
   const { i18n } = useTranslation();
   // const { isLoad } = useSelector((state: RootState) => state.appSettings);
   const [wait, setWait] = useState(true);
   const pathname = usePathname();
-  // const profile = useSelector((state: RootState) => state.auth);
+  // const profile = useSelector((state: RootState) => state.user);
   const route = useRouter();
   // useEffect(() => {
   //   if (profile === null) route.push("/login");
   // }, [profile]);
+
+  const { get } = useApi();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("Call me iam all apis statics");
+    get({ url: SUPPLIERS.getAll }).then((res) => {
+      console.log("SUPPLIERS.getAll: ", { res });
+      if (Array.isArray(res)) {
+        // setSuppliers(res);
+        dispatch(saveSuppliersAction(res));
+      } else {
+        // alert("Error: get suppliers");
+        // setSuppliers([]);
+        // if (!suppliers) {
+        dispatch(saveSuppliersAction([]));
+        // }
+      }
+    });
+    get({ url: EXPENSES.getAll }).then((res) => {
+      console.log("EXPENSES.getAll: ", { res });
+      if (Array.isArray(res)) {
+        // setSuppliers(res);
+        dispatch(saveExpensesAction(res));
+      } else {
+        // alert("Error: get suppliers");
+        // setSuppliers([]);
+        // if (!suppliers) {
+        dispatch(saveExpensesAction([]));
+        // }
+      }
+    });
+    get({ url: CLIENT.getAll }).then((res) => {
+      console.log("CLIENT.getAll: ", { res });
+      if (Array.isArray(res)) {
+        // setSuppliers(res);
+        dispatch(saveClientsAction(res));
+      } else {
+        // alert("Error: get suppliers");
+        // setSuppliers([]);
+        // if (!suppliers) {
+        dispatch(saveClientsAction([]));
+        // }
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {

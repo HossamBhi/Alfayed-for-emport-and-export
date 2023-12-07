@@ -1,35 +1,89 @@
 "use client";
-import { CustomButton, CustomInput, CustomSelect } from "@/components/common";
+import { CustomButton, CustomInput } from "@/components/common";
 import { AddFarm, AddPropduct } from "@/components/popups";
-import { DATA, PRODUCTS } from "@/data";
+import { AddExpensesCard } from "@/components/stock";
+// import { PRODUCTS } from "@/data";
+import { useApi } from "@/hooks";
+import { RootState } from "@/redux/store";
+import { saveSuppliersAction } from "@/redux/suppliers";
+import { SUPPLIERS, STORE, PRODUCTS } from "@/utils/endpoints";
 import { formatDate } from "@/utils/helper";
-import {
-  Autocomplete,
-  FormControl,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
-import { useCallback, useMemo, useState } from "react";
+import { productProps, supplierProps } from "@/utils/types";
+import { Autocomplete, FormControl } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const suppliers = useSelector((state: RootState) => state.suppliers);
   const { t } = useTranslation();
-  const searchParmas = new URLSearchParams(window.location.search);
+  const [products, setProducts] = useState<productProps[]>([]);
+  const [id, setId] = useState<null | string>(null);
   const [values, setValues] = useState({
-    name: "",
+    farmsName: "",
+    farmsID: 0,
     carNumber: "",
     date: formatDate(new Date()),
-    product: "",
+    productName: "",
+    productID: 0,
     number: 0,
     quantity: 0,
     discount: 0,
     netQuantity: 0,
     price: 0,
-    payed: 0,
+    paied: 0,
     remaining: 0,
-    note: "",
+    farmsNotes: "",
     total: 0,
+    supplyDate: "2023-12-04T00:00:00",
+    created_Date: null,
   });
+
+  const dispatch = useDispatch();
+  const { get } = useApi();
+
+  useEffect(() => {
+    const searchQuiry = new URLSearchParams(window.location.search);
+    const ID = searchQuiry.get("id");
+    if (ID != null) {
+      setId(ID);
+      get({ url: SUPPLIERS.getRecord, params: { recordId: ID } }).then(
+        (res) => {
+          console.log("SUPPLIERS.getRecord: ", { res });
+
+          if (res?.farmsID) {
+            setValues({ ...values, ...res });
+          }
+        }
+      );
+    }
+    get({ url: SUPPLIERS.getAll }).then((res) => {
+      console.log("SUPPLIERS.getAll: ", { res });
+      if (Array.isArray(res)) {
+        // setSuppliers(res);
+        dispatch(saveSuppliersAction(res));
+      } else {
+        alert("Error: get suppliers");
+        // setSuppliers([]);
+        if (!suppliers) {
+          dispatch(saveSuppliersAction([]));
+        }
+      }
+    });
+    get({ url: PRODUCTS.getAll }).then((res) => {
+      console.log("PRODUCTS.getAll: ", { res });
+      if (Array.isArray(res)) {
+        setProducts(res);
+        // dispatch(saveSuppliersAction(res));
+      } else {
+        alert("Error: get Products");
+        setProducts([]);
+        if (!suppliers) {
+          // dispatch(saveSuppliersAction([]));
+        }
+      }
+    });
+  }, [window.location]);
 
   const handleChangeValue = (e: any) => {
     const { id, value } = e.target;
@@ -38,9 +92,13 @@ export default function Home() {
   };
   const handleSelectChange = (
     name: string,
-    value: null | (typeof PRODUCTS)[0]
+    value: null | (productProps & supplierProps)
   ) => {
-    setValues({ ...values, [name]: value?.id });
+    setValues({
+      ...values,
+      [name + "ID"]: value?.id || value?.productID || "",
+      [name + "Name"]: value?.name || value?.productName || "",
+    });
   };
 
   const calculateNetQuantity: number = useMemo(() => {
@@ -59,9 +117,12 @@ export default function Home() {
   const handleSubmit = () => {
     alert("Submit me");
   };
-
-  console.log({ name: values.name });
-
+  console.log({
+    suppliers,
+    products,
+    values,
+    far: suppliers?.find((item) => item.id === values.farmsID),
+  });
   // TODO: make a float precentage
   return (
     <main className="flex min-h-screen flex-col p-4">
@@ -75,17 +136,23 @@ export default function Home() {
             <Autocomplete
               className="flex-1"
               clearOnEscape
-              options={DATA}
+              options={suppliers || []}
               getOptionLabel={(item) => item.name}
-              id="name"
+              id="farms"
               onChange={(e, value) => {
-                handleSelectChange("name", value);
+                handleSelectChange("farms", value);
               }}
+              // value={suppliers?.find((item) => item.id == values.farmsID)}
+              value={{ id: values.farmsID, name: values.farmsName } as any}
+              inputValue={values.farmsName || ""}
               renderInput={(params) => (
                 <CustomInput
                   {...params}
-                  id="name"
+                  id="farms"
                   label={t("AddToStock.name")}
+                  value={
+                    suppliers?.find((item) => item.id === values.farmsID)?.name
+                  }
                 />
               )}
             />
@@ -105,12 +172,22 @@ export default function Home() {
             <Autocomplete
               className="flex-1"
               clearOnEscape
-              options={PRODUCTS}
-              getOptionLabel={(item) => item.name}
+              options={products || []}
+              getOptionLabel={(item) => item.productName}
               id="product"
               onChange={(e, value) => {
-                handleSelectChange("product", value);
+                handleSelectChange("product", value as any);
               }}
+              // value={products?.find(
+              //   (item) => item.productID === values.productID
+              // )}
+              inputValue={values.productName || ""}
+              value={
+                {
+                  productID: values.productID,
+                  productName: values.productName,
+                } as any
+              }
               renderInput={(params) => (
                 <CustomInput
                   {...params}
@@ -130,15 +207,7 @@ export default function Home() {
               onChange={handleChangeValue}
             />
           </FormControl>
-          {/* <FormControl className="md:col-span-2 col-span-1">
-            <CustomSelect
-              items={PRODUCTS}
-              name="product"
-              label={t("AddToStock.product")}
-              value={values.product}
-              onChange={handleSelectChange}
-            />
-          </FormControl> */}
+
           <FormControl>
             <CustomInput
               id="number"
@@ -197,28 +266,19 @@ export default function Home() {
           </FormControl>
           <FormControl>
             <CustomInput
-              id="payed"
+              id="paied"
               label={t("AddToStock.payed")}
-              value={values.payed || calculatePaied}
+              value={values.paied || calculatePaied}
               onChange={handleChangeValue}
               type="number"
             />
           </FormControl>
-          {/* <FormControl>
-            <CustomInput
-              id="remaining"
-              label={t("AddToStock.remaining")}
-              value={values.remaining}
-              onChange={handleChangeValue}
-              type="number"
-            />
-          </FormControl> */}
 
           <FormControl className="md:col-span-2 col-span-1">
             <CustomInput
-              id="note"
+              id="farmsNotes"
               label={t("AddToStock.note")}
-              value={values.note}
+              value={values.farmsNotes}
               onChange={handleChangeValue}
               type="text"
             />
@@ -229,6 +289,8 @@ export default function Home() {
           </CustomButton>
         </form>
       </div>
+
+      <AddExpensesCard />
     </main>
   );
 }

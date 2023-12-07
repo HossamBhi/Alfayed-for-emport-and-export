@@ -19,10 +19,10 @@ const AddExpensesCategory = ({ onClose }: AddExpensesCategoryProps) => {
     <div>
       <PopupButton onClick={() => setShowAddProduct(true)}>
         <BsFillPlusCircleFill className="ltr:mr-4 rtl:ml-4" />{" "}
-        {t("addExpensesCategory")}
+        {t("expenses.addExpensesCategory")}
       </PopupButton>
       <CustomDialog open={showAddProduct} onClose={handleOnCloseAddProduct}>
-        <DialogTitle>{t("addExpensesCategory")}</DialogTitle>
+        <DialogTitle>{t("expenses.addExpensesCategory")}</DialogTitle>
         <DialogContent sx={{ width: "100%" }}>
           <CustomInput
             autoFocus
@@ -35,10 +35,10 @@ const AddExpensesCategory = ({ onClose }: AddExpensesCategoryProps) => {
         </DialogContent>
         <DialogActions>
           <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("close")}
+            {t("common.close")}
           </CustomButton>
           <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("save")}
+            {t("common.save")}
           </CustomButton>
         </DialogActions>
       </CustomDialog>

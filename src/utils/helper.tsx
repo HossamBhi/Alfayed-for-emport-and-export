@@ -25,14 +25,27 @@ export const SIDEMENU_LINKS = [
 ];
 
 export const createDataColumns = (
-  data: any[],
+  data: { [key: string]: any },
   t: (s: string) => void
 ): {
   field: string;
   headerName: string;
   width: number;
+  headerAlign: "center";
+  align: "center";
 }[] => {
-  const keys = Object?.keys(data[0]);
+  if (!data) {
+    return [
+      {
+        field: "",
+        headerName: "",
+        width: 100,
+        align: "center",
+        headerAlign: "center",
+      },
+    ];
+  }
+  const keys = Object?.keys(data);
   const result = keys.reduce((prev: any, curr) => {
     return [
       ...prev,

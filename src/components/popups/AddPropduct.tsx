@@ -28,17 +28,17 @@ const AddPropduct = ({ onClose }: AddPropductProps) => {
             autoFocus
             margin="dense"
             id="name"
-            label={t("productName")}
+            label={t("supplierTable.productName")}
             type="text"
             fullWidth
           />
         </DialogContent>
         <DialogActions>
           <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("close")}
+            {t("common.close")}
           </CustomButton>
           <CustomButton onClick={handleOnCloseAddProduct}>
-            {t("save")}
+            {t("common.save")}
           </CustomButton>
         </DialogActions>
       </CustomDialog>
