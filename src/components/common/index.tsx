@@ -3,5 +3,13 @@ import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import CustomSelect from "./CustomSelect";
 import CustomTable from "./CustomTable";
+import PageTitle from "./PageTitle";
 
-export { CustomDialog, CustomInput, CustomButton, CustomSelect, CustomTable };
+export {
+  CustomDialog,
+  CustomInput,
+  CustomButton,
+  CustomSelect,
+  CustomTable,
+  PageTitle,
+};

@@ -1,6 +1,5 @@
 export const ar = {
   translation: {
-    "addPropduct": "إضافة منتج",
     "farmsAndFarmers": "المزارع والموردين",
     "common": {
       "total": "صافي الحساب",
@@ -9,6 +8,11 @@ export const ar = {
       "save": "حفظ",
       "close": "إغلاق",
       "edit": "تعديل",
+    },
+    "product": {
+      "addPropduct": "إضافة منتج",
+      "editPropduct": "تعديل المنتج",
+      "productName": "اسم المنتج",
     },
     "menu": {
       "addToStock": "أضف إلى المخزون",
@@ -49,7 +53,7 @@ export const ar = {
       "product": "المنتج",
       "number": "العدد",
       "quantity": "الكميه",
-      "discount": "السماح",
+      "discount": "الخصم",
       "netQuantity": "صافي الكمية",
       "price": "السعر",
       "payed": "مدفوع",
@@ -67,7 +71,9 @@ export const ar = {
       "expenseDate": "تاريخ المصروف",
       "subTotal": "المبلغ",
       "value": "القيمه",
-      "addExpenseOnProduct": "اضافه مصروف علي المتنج"
+      "addExpenseOnProduct": "اضافه مصروف علي المتنج",
+      "discountFlat": "ثابت",
+      "discountPercentage": "نسبة مئوية",
     },
     "supplierTable": {
       "farmsName": "اسم المورد",

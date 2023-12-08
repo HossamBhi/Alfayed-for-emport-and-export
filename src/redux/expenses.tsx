@@ -1,35 +1,58 @@
-import { expenseProps } from "@/utils/types";
+import { expenseProps, expenseTypesProps } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 
-let initialState: expenseProps[] = [];
+let initialState: {
+  expenses: expenseProps[];
+  expensesTypes: expenseTypesProps[];
+} = { expenses: [], expensesTypes: [] };
 // let initialState: any | supplierProps[] = null;
 
 const expenses = createSlice({
   name: "expenses",
   initialState,
   reducers: {
-    saveExpensesAction: (state, { payload }) => payload,
+    saveExpensesAction: (state, { payload }) => {
+      state.expenses = payload;
+    },
     addExpenseAction: (state, { payload }) => {
       if (state === null) {
         return state;
       }
-      if (Array.isArray(state)) {
-        state?.push(payload);
+      console.log({ state: state.expensesTypes, payload });
+      if (Array.isArray(state?.expenses)) {
+        state?.expenses?.unshift(payload);
       }
     },
     editExpenseAction: (state, { payload }) => {
       if (state === null) {
         return state;
       }
-      const findIndex = state?.findIndex(
+      const findIndex = state?.expenses?.findIndex(
         (item: expenseProps) => item.id == payload.id
       );
-      state[findIndex] = payload;
+      state.expenses[findIndex] = payload;
+    },
+    saveExpensesTypesAction: (state, { payload }) => {
+      state.expensesTypes = payload;
+    },
+    addExpenseTypeAction: (state, { payload }) => {
+      if (state === null) {
+        return state;
+      }
+      console.log({ state: state.expensesTypes, payload });
+      if (Array.isArray(state?.expensesTypes)) {
+        state?.expensesTypes?.unshift(payload);
+      }
     },
   },
 });
 
-export const { saveExpensesAction, addExpenseAction, editExpenseAction } =
-  expenses.actions;
+export const {
+  saveExpensesAction,
+  addExpenseAction,
+  editExpenseAction,
+  addExpenseTypeAction,
+  saveExpensesTypesAction,
+} = expenses.actions;
 
 export default expenses.reducer;

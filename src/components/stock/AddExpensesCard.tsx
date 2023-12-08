@@ -1,6 +1,6 @@
 "use client";
-import { CustomButton, CustomInput } from "@/components/common";
-import { AddExpenses } from "@/components/popups";
+import { CustomButton, CustomInput, PageTitle } from "@/components/common";
+import { AddExpenseToStock, AddExpenses } from "@/components/popups";
 // import { PRODUCTS } from "@/data";
 import { useApi } from "@/hooks";
 import { RootState } from "@/redux/store";
@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TransitionGroup } from "react-transition-group";
 
 const AddExpensesCard = () => {
-  const expenses = useSelector((state: RootState) => state.expenses);
+  const expenses = useSelector((state: RootState) => state.expenses.expenses);
   const { t } = useTranslation();
   const [id, setId] = useState<null | string>(null);
   const [fruitsInBasket, setFruitsInBasket] = useState([0]);
@@ -87,18 +87,20 @@ const AddExpensesCard = () => {
   };
   return (
     <div>
-      <h4
-        className={`mb-4 col-span-1 flex justify-between items-center border rounded-lg px-4 py-2 bg-[#26693780]`}
+      <PageTitle
+        className={`mb-4 col-span-1 flex justify-between items-center !text-xl`}
+        // className={`mb-4 col-span-1 flex justify-between items-center border rounded-lg px-4 py-2 bg-[#26693780]`}
+        title={t("AddToStock.expenses")}
       >
-        {t("AddToStock.expenses")}
-        <CustomButton
+        {/* <CustomButton
           variant="outlined"
           onClick={handleAddFruit}
           color="secondary"
         >
           {t("AddToStock.addExpenseOnProduct")}
-        </CustomButton>
-      </h4>
+        </CustomButton> */}
+        <AddExpenseToStock showButtonTitle />
+      </PageTitle>
 
       <List sx={{ mt: 1 }}>
         <TransitionGroup>

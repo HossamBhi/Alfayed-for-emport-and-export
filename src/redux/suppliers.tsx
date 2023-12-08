@@ -14,7 +14,7 @@ const suppliers = createSlice({
         return state;
       }
       if (Array.isArray(state)) {
-        state?.push(payload);
+        state?.unshift(payload);
       }
     },
     editSupplierAction: (state, { payload }) => {

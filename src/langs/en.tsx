@@ -1,7 +1,11 @@
 export const en = {
   translation: {
-    "addPropduct": "Add Propduct",
     "farmsAndFarmers": "Farms And Suppliers",
+    "product": {
+      "addPropduct": "Add Propduct",
+      "editPropduct": "editPropduct",
+      "productName": "Product Name",
+    },
     "common": {
       "total": "Total",
       "typeSomething": "Type Something...",
@@ -67,7 +71,9 @@ export const en = {
       "expenseDate": "Expense Date",
       "subTotal": "Subtotal",
       "value": "value",
-      "addExpenseOnProduct": "Add Expense On Product"
+      "addExpenseOnProduct": "Add Expense On Product",
+      "discountFlat": "Flat",
+      "discountPercentage": "Percentage"
     },
     "supplierTable": {
       "farmsName": "farm Name",

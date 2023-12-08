@@ -41,6 +41,8 @@ export const EXPENSES_TYPE = {
 
 export const PRODUCTS = {
   getAll: "GetStoreProducts",
+  add: "AddNewProduct",
+  update: "UpdateProduct",
 };
 
 export const STORE = {

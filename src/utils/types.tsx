@@ -36,6 +36,10 @@ export type expenseProps = {
   total: string;
   date?: Date | string;
 };
+export type expenseTypesProps = {
+  id: number;
+  name: string;
+};
 
 export type clientProps = {
   id: number;

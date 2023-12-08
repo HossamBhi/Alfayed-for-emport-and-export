@@ -1,5 +1,7 @@
 "use client";
-import { DATA, EXPENSES_CATEGORIES } from "@/data";
+import { DATA } from "@/data";
+import { useApi } from "@/hooks";
+import { EXPENSES, EXPENSES_TYPE } from "@/utils/endpoints";
 import { expenseProps } from "@/utils/types";
 import {
   Autocomplete,
@@ -7,27 +9,27 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  SelectChangeEvent,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AddExpensesCategory, PopupButton } from ".";
-import {
-  CustomButton,
-  CustomDialog,
-  CustomInput,
-  CustomSelect,
-} from "../common";
-import { useApi } from "@/hooks";
-import { EXPENSES } from "@/utils/endpoints";
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { AddExpensesCategory, PopupButton } from ".";
+import { CustomButton, CustomDialog, CustomInput } from "../common";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import {
+  addExpenseAction,
+  editExpenseAction,
+  saveExpensesTypesAction,
+} from "@/redux/expenses";
+import { isNotEmpty } from "@/utils/validation";
 
 type AddExpensesProps = {
   onClose?: () => void;
   show?: boolean;
   hideShowBtn?: boolean;
-  editData?: any;
   showButtonTitle?: boolean;
+  editData?: any;
   setEditData?: (d: expenseProps) => void;
 };
 
@@ -39,17 +41,31 @@ const AddExpenses = ({
   showButtonTitle,
   setEditData,
 }: AddExpensesProps) => {
-  const { post, put } = useApi();
+  const { expensesTypes } = useSelector((state: RootState) => state.expenses);
+  const { post, put, get } = useApi();
   const { t } = useTranslation();
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [name, setName] = useState(editData?.name ? editData?.name : "");
   const [expenseType, setExpenseType] = useState(
     editData?.type ? editData?.type : ""
   );
-  const handleOnCloseAddProduct = () =>
+  const [errors, setErrors] = useState({ name: false, type: false });
+  const dispatch = useDispatch();
+  const handleOnCloseAddProduct = () => {
     onClose ? onClose() : setShowAddProduct(false);
-
+  };
+  
   const callAPI = () => {
+    if (!isNotEmpty(name)) {
+      return setErrors({ ...errors, name: true });
+    } else {
+      setErrors({ ...errors, name: false });
+    }
+    if (!expenseType?.id) {
+      return setErrors({ ...errors, type: true });
+    } else {
+      setErrors({ ...errors, type: false });
+    }
     if (editData) {
       put({
         url: EXPENSES.update,
@@ -59,17 +75,35 @@ const AddExpenses = ({
         console.log("Update EXPENSES: ", res);
         if (res?.id) {
           setEditData && setEditData(res);
+          dispatch(editExpenseAction(res));
         }
       });
     } else {
-      post({ url: EXPENSES.add, data: { name } }).then((res) => {
+      post({
+        url: EXPENSES.add,
+        data: { name, expenseTypeId: expenseType?.id },
+      }).then((res) => {
         console.log("get EXPENSES: ", res);
+        if (res.status) {
+          alert("Error " + res.status + ": " + res.data);
+        } else {
+          dispatch(addExpenseAction(res));
+        }
       });
 
       setName("");
     }
+    handleOnCloseAddProduct();
   };
 
+  useEffect(() => {
+    get({ url: EXPENSES_TYPE.getAll }).then((res) => {
+      console.log("EXPENSES_TYPE.getAll: ", { res });
+      if (Array.isArray(res)) {
+        dispatch(saveExpensesTypesAction(res));
+      }
+    });
+  }, []);
   return (
     <div>
       {!hideShowBtn && (
@@ -92,13 +126,13 @@ const AddExpenses = ({
         <DialogContent sx={{ width: "100%" }}>
           <FormControl fullWidth sx={{ mb: 2 }}>
             <CustomInput
+              error={errors.name}
               autoFocus
               margin="dense"
               id="name"
               label={t("expenses.expensesName")}
               type="text"
               fullWidth
-              // variant="standard"
               value={name}
               onChange={({ target }) => setName(target.value)}
             />
@@ -108,10 +142,15 @@ const AddExpenses = ({
             <Autocomplete
               className="flex-1"
               clearOnEscape
-              options={DATA}
+              options={expensesTypes}
               getOptionLabel={(item) => item.name}
               id="type"
               onChange={(e, value) => {
+                if (!value?.id) {
+                  setErrors({ ...errors, type: true });
+                } else {
+                  setErrors({ ...errors, type: false });
+                }
                 setExpenseType(value);
               }}
               renderInput={(params) => (
@@ -119,22 +158,18 @@ const AddExpenses = ({
                   {...params}
                   id="type"
                   label={t("expenses.expenseCategroy")}
+                  error={errors.type}
                 />
               )}
             />
-            <AddExpensesCategory />
+            <AddExpensesCategory showButtonTitle />
           </div>
         </DialogContent>
         <DialogActions>
           <CustomButton onClick={handleOnCloseAddProduct}>
             {t("common.close")}
           </CustomButton>
-          <CustomButton
-            onClick={() => {
-              callAPI();
-              handleOnCloseAddProduct();
-            }}
-          >
+          <CustomButton onClick={callAPI}>
             {editData ? t("common.edit") : t("common.save")}
           </CustomButton>
         </DialogActions>

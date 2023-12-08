@@ -8,7 +8,6 @@ import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
 import { LinearProgress } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GiFarmer } from "react-icons/gi";
@@ -22,31 +21,21 @@ export default function Home() {
   const [supplierData, setSupplierData] = useState<null | supplierDataProps[]>(
     null
   );
-  // console.log({ supplier, error });
   useEffect(() => {
     const searchQuiry = new URLSearchParams(window.location.search);
     const ID = searchQuiry.get("id");
     if (ID != null) {
-      // getSupplier({ id: Number(ID) });
       setId(ID);
-      get({ url: SUPPLIERS.getById, params: { id: ID } }).then((res) => {
-        console.log("farm data", { res });
-        // if (Array.isArray(res)) {
-        if (!res.status) {
-          setSupplier(res);
-        } else {
-          alert("Error " + res.status + ": " + res.data);
-        }
-      });
-      get({ url: SUPPLIERS.getAllRecords, params: { farmid: ID } }).then(
+      get({ url: SUPPLIERS.getRecordWithData, params: { recordId: ID } }).then(
         (res) => {
-          console.log("farm recorders", { res });
-          if (!res.status && res.farmRecords) {
+          console.log("farm data get Record With Data", { res });
+          // if (Array.isArray(res)) {
+          if (!res.status) {
+            setSupplier(res);
             setSupplierData(res.farmRecords);
           } else {
             setSupplierData([]);
-            if (res.status != 404)
-              alert("Error " + res.status + ": " + res.data);
+            alert("Error " + res.status + ": " + res.data);
           }
         }
       );
@@ -94,37 +83,6 @@ export default function Home() {
       </main>
     );
   }
-
-  // [
-  //   {
-  //     field: "nameEn",
-  //     headerName: "Name En",
-  //     width: 100,
-  //   },
-  //   {
-  //     field: "nameAr",
-  //     headerName: "Name Ar",
-  //     width: 100,
-  //   },
-  //   {
-  //     field: "status",
-  //     headerName: "Status",
-  //     width: 100,
-  //     renderCell(params) {
-  //       const { value, id } = params;
-  //       return (
-  //         <p
-  //           key={id}
-  //           className={`p-2 rounded-lg text-white ${
-  //             value === 1 ? "bg-red-600" : "bg-green-400"
-  //           }`}
-  //         >
-  //           {value === 1 ? t("common.support") : t("common.nonsupport")}
-  //         </p>
-  //       );
-  //     },
-  //   },
-  // ];
 
   return (
     <main className="flex min-h-screen flex-col p-4">

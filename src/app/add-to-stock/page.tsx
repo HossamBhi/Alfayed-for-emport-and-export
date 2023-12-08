@@ -1,5 +1,5 @@
 "use client";
-import { CustomButton, CustomInput } from "@/components/common";
+import { CustomButton, CustomInput, CustomSelect } from "@/components/common";
 import { AddFarm, AddPropduct } from "@/components/popups";
 import { AddExpensesCard } from "@/components/stock";
 // import { PRODUCTS } from "@/data";
@@ -10,15 +10,22 @@ import { SUPPLIERS, STORE, PRODUCTS } from "@/utils/endpoints";
 import { formatDate } from "@/utils/helper";
 import { productProps, supplierProps } from "@/utils/types";
 import { Autocomplete, FormControl } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  // console.log(searchParams.get("id"));
   const suppliers = useSelector((state: RootState) => state.suppliers);
   const { t } = useTranslation();
   const [products, setProducts] = useState<productProps[]>([]);
-  const [id, setId] = useState<null | string>(null);
+  // const [id, setId] = useState<null | string>(null);
+  const { post } = useApi();
   const [values, setValues] = useState({
     farmsName: "",
     farmsID: 0,
@@ -37,17 +44,36 @@ export default function Home() {
     total: 0,
     supplyDate: "2023-12-04T00:00:00",
     created_Date: null,
+    isPercentage: true,
+  });
+
+  const [errors, setErrors] = useState({
+    farmsName: false,
+    farmsID: false,
+    carNumber: false,
+    date: false,
+    productID: false,
+    number: false,
+    quantity: false,
+    discount: false,
+    netQuantity: false,
+    price: false,
+    paied: false,
+    remaining: false,
+    farmsNotes: false,
+    total: false,
+    supplyDate: false,
   });
 
   const dispatch = useDispatch();
   const { get } = useApi();
 
   useEffect(() => {
-    const searchQuiry = new URLSearchParams(window.location.search);
-    const ID = searchQuiry.get("id");
-    if (ID != null) {
-      setId(ID);
-      get({ url: SUPPLIERS.getRecord, params: { recordId: ID } }).then(
+    // const searchQuiry = new URLSearchParams(window.location.search);
+    // const ID = searchQuiry.get("id");
+    if (id != null) {
+      // setId(ID);
+      get({ url: SUPPLIERS.getRecord, params: { recordId: id } }).then(
         (res) => {
           console.log("SUPPLIERS.getRecord: ", { res });
 
@@ -99,30 +125,67 @@ export default function Home() {
       [name + "ID"]: value?.id || value?.productID || "",
       [name + "Name"]: value?.name || value?.productName || "",
     });
+
+    setErrors((v) => ({
+      ...v,
+      [name + "ID"]: value?.id || value?.productID ? false : true,
+    }));
   };
 
   const calculateNetQuantity: number = useMemo(() => {
-    const { quantity, discount } = values;
+    const { quantity, discount, isPercentage } = values;
     if (discount <= 0) return Number(quantity);
+    if (isPercentage)
+      return Number((quantity * (1 - Number(discount / 100))).toFixed(2));
+    else return Number((quantity - discount).toFixed(2));
+  }, [values.discount, values.quantity, values.isPercentage]);
 
-    return Number((quantity * (1 - Number(discount / 100))).toFixed(2));
-  }, [values.discount, values.quantity]);
-
-  const calculatePaied = useMemo(() => {
+  const calculateTotal = useMemo(() => {
     const { price } = values;
 
     return (price * (calculateNetQuantity || 1)).toFixed(2);
-  }, [calculateNetQuantity]);
+  }, [calculateNetQuantity, values.price]);
+  const isValid = () => {
+    let isTrue = true;
+    if (!values.farmsID) {
+      setErrors((v) => ({ ...v, farmsID: true }));
+      isTrue = false;
+    } else {
+      setErrors((v) => ({ ...v, farmsID: false }));
+    }
+    if (!values.productID) {
+      setErrors((v) => ({ ...v, productID: true }));
+      isTrue = false;
+    } else {
+      setErrors((v) => ({ ...v, productID: false }));
+    }
 
-  const handleSubmit = () => {
-    alert("Submit me");
+    return isTrue;
   };
-  console.log({
-    suppliers,
-    products,
-    values,
-    far: suppliers?.find((item) => item.id === values.farmsID),
-  });
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+  const handleSubmit = () => {
+    isValid();
+    if (isValid()) {
+      post({
+        url: SUPPLIERS.addRecord,
+        data: { ...values, total: calculateTotal },
+      }).then((res) => {
+        console.log("SUPPLIERS.addRecord: ", { res });
+        if (res.recordId) {
+          router.push(pathname + "?" + createQueryString("id", res.recordId));
+        }
+      });
+    }
+  };
+
   // TODO: make a float precentage
   return (
     <main className="flex min-h-screen flex-col p-4">
@@ -132,7 +195,7 @@ export default function Home() {
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
         >
-          <div className="md:col-span-2 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
+          <div className="md:col-span-3 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
             <Autocomplete
               className="flex-1"
               clearOnEscape
@@ -148,6 +211,7 @@ export default function Home() {
               renderInput={(params) => (
                 <CustomInput
                   {...params}
+                  error={errors.farmsID}
                   id="farms"
                   label={t("AddToStock.name")}
                   value={
@@ -158,16 +222,6 @@ export default function Home() {
             />
             <AddFarm showButtonTitle />
           </div>
-
-          <FormControl>
-            <CustomInput
-              id="date"
-              label={t("AddToStock.date")}
-              value={values.date}
-              onChange={handleChangeValue}
-              type="date"
-            />
-          </FormControl>
           <div className="md:col-span-2 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
             <Autocomplete
               className="flex-1"
@@ -191,23 +245,32 @@ export default function Home() {
               renderInput={(params) => (
                 <CustomInput
                   {...params}
+                  error={errors.productID}
                   id="product"
                   label={t("AddToStock.product")}
                 />
               )}
             />
-            <AddPropduct />
+            <AddPropduct showButtonTitle />
           </div>
           <FormControl>
             <CustomInput
-              type="number"
+              id="date"
+              label={t("AddToStock.date")}
+              value={values.date}
+              onChange={handleChangeValue}
+              type="date"
+            />
+          </FormControl>
+          <FormControl>
+            <CustomInput
+              type="text"
               id="carNumber"
               label={t("AddToStock.carNumber")}
               value={values.carNumber}
               onChange={handleChangeValue}
             />
           </FormControl>
-
           <FormControl>
             <CustomInput
               id="number"
@@ -234,6 +297,26 @@ export default function Home() {
               onChange={handleChangeValue}
               type="number"
             />
+          </FormControl>{" "}
+          <FormControl>
+            <CustomSelect
+              items={[
+                { id: 1, name: t("AddToStock.discountPercentage") },
+                { id: 2, name: t("AddToStock.discountFlat") },
+              ]}
+              id="discount"
+              label={t("AddToStock.discount")}
+              onChange={(e, item) => {
+                const { value } = e.target;
+                setValues({
+                  ...values,
+                  isPercentage: value === 1,
+                });
+              }}
+
+              // value={values.discount}
+              // onChange={handleChangeValue}
+            />
           </FormControl>
           <FormControl>
             <CustomInput
@@ -258,7 +341,7 @@ export default function Home() {
             <CustomInput
               id="total"
               label={t("AddToStock.total")}
-              value={values.total}
+              value={values.total || calculateTotal}
               onChange={handleChangeValue}
               type="number"
               disabled
@@ -268,12 +351,11 @@ export default function Home() {
             <CustomInput
               id="paied"
               label={t("AddToStock.payed")}
-              value={values.paied || calculatePaied}
+              value={values.paied}
               onChange={handleChangeValue}
               type="number"
             />
           </FormControl>
-
           <FormControl className="md:col-span-2 col-span-1">
             <CustomInput
               id="farmsNotes"
@@ -283,14 +365,14 @@ export default function Home() {
               type="text"
             />
           </FormControl>
-          <div className="col-span-2 md:flex hidden"></div>
+          {/* <div className="col-span-2 md:flex hidden"></div> */}
           <CustomButton variant="contained" onClick={handleSubmit}>
             {t("AddToStock.save")}
           </CustomButton>
         </form>
       </div>
 
-      <AddExpensesCard />
+      {id && <AddExpensesCard />}
     </main>
   );
 }

@@ -8,30 +8,33 @@ import { useEffect, useState } from "react";
 import { useApi } from "@/hooks";
 import { expenseProps } from "@/utils/types";
 import { EXPENSES } from "@/utils/endpoints";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Expenses = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const [expense, setExpense] = useState<null | expenseProps[]>(null);
-  const { get } = useApi();
+  // const router = useRouter();
+  const expenses = useSelector((state: RootState) => state.expenses.expenses);
+  // const [expense, setExpense] = useState<null | expenseProps[]>(null);
+  // const { get } = useApi();
 
-  useEffect(() => {
-    get({ url: EXPENSES.getAll }).then((res) => {
-      console.log("EXPENSES.getAll: ",{ res });
-      if (Array.isArray(res)) {
-        setExpense(res);
-      } else {
-        alert("Error: get Expenses");
-        setExpense([]);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   get({ url: EXPENSES.getAll }).then((res) => {
+  //     console.log("EXPENSES.getAll: ", { res });
+  //     if (Array.isArray(res)) {
+  //       setExpense(res);
+  //     } else {
+  //       alert("Error: get Expenses");
+  //       setExpense([]);
+  //     }
+  //   });
+  // }, []);
   return (
     <CardsContainer
-      isLoading={expense === null}
+      isLoading={expenses === null}
       title={t("dashboard.expenses")}
       titleButton={<AddExpenses />}
-      items={expense || []}
+      items={expenses || []}
       Card={ExpensesCard}
     />
   );

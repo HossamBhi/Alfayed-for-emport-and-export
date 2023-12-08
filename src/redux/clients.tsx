@@ -14,7 +14,7 @@ const clients = createSlice({
         return state;
       }
       if (Array.isArray(state)) {
-        state?.push(payload);
+        state?.unshift(payload);
       }
     },
     editClientAction: (state, { payload }) => {
