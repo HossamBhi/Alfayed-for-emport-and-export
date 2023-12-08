@@ -20,6 +20,7 @@ export const en = {
       "addFarm": "Add Supplier",
       "editFarm": "Edit Supplier",
       "farmName": "Supplier Name",
+      "addSupplier": "Add Supplier"
     },
     "expenses": {
       "expenseCategroy": "Categroy",

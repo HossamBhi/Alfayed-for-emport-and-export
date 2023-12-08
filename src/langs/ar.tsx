@@ -13,7 +13,8 @@ export const ar = {
     "menu": {
       "addToStock": "أضف إلى المخزون",
       "stock": "مخزون",
-      "accounts": "حسابات"
+      "accounts": "حسابات",
+      "addSupplier": "إضافة مورد"
     },
     "AddFarm": {
       "addFarm": "أضف المورد",

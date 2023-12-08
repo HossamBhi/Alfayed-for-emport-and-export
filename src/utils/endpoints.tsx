@@ -1,4 +1,4 @@
-export const DOMAIN = "http://alfayedfarm.somee.com";
+export const DOMAIN = "https://alfayedfarm.somee.com";
 export const API_URL = DOMAIN + "/";
 
 export const SUPPLIERS = {
