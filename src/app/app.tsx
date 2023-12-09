@@ -3,21 +3,23 @@ import { PageHeader, SideMenu } from "@/components";
 import { useApi } from "@/hooks";
 import { saveClientsAction } from "@/redux/clients";
 import { saveExpensesAction } from "@/redux/expenses";
+import { RootState } from "@/redux/store";
 import { saveSuppliersAction } from "@/redux/suppliers";
 import { CLIENT, EXPENSES, SUPPLIERS } from "@/utils/endpoints";
+import { LinearProgress } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../redux/store";
 const App = ({ children }: { children: ReactNode }) => {
   const { i18n } = useTranslation();
-  // const { isLoad } = useSelector((state: RootState) => state.appSettings);
+  const { isLoad } = useSelector((state: RootState) => state.appSettings);
   const [wait, setWait] = useState(true);
   const pathname = usePathname();
   // const profile = useSelector((state: RootState) => state.user);
-  const route = useRouter();
+  // const router = useRouter();
   // useEffect(() => {
   //   if (profile === null) route.push("/login");
   // }, [profile]);
@@ -86,12 +88,19 @@ const App = ({ children }: { children: ReactNode }) => {
             <>{children}</>
           ) : (
             <>
-              <SideMenu />
+              <div className="z-20">
+                <SideMenu />
+              </div>
               <div
                 className={`bg-gray-100 ${
                   i18n.dir() === "rtl" ? "mr-20" : "ml-20"
                 }`}
               >
+                {isLoad && (
+                  <div className="absolute top-0 w-full rounded">
+                    <LinearProgress className="rounded" />
+                  </div>
+                )}
                 <PageHeader />
                 {children}
               </div>

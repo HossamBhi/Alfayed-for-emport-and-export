@@ -8,6 +8,8 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import { PopupButton } from ".";
 import { CustomButton, CustomDialog, CustomInput } from "../common";
 import { supplierProps } from "@/utils/types";
+import { useDispatch } from "react-redux";
+import { addSupplierAction, editSupplierAction } from "@/redux/suppliers";
 
 type AddFarmProps = {
   onClose?: () => void;
@@ -32,7 +34,7 @@ const AddFarm = ({
   const [name, setName] = useState(editData?.name ? editData?.name : "");
   const handleOnCloseAddProduct = () =>
     onClose ? onClose() : setShowAddProduct(false);
-
+  const dispatch = useDispatch();
   const callAPI = () => {
     if (editData) {
       put({
@@ -43,12 +45,15 @@ const AddFarm = ({
         console.log("Update Supplier: ", res);
         if (res?.id) {
           setEditData && setEditData(res);
+          dispatch(editSupplierAction(res));
         }
       });
-      
     } else {
       post({ url: SUPPLIERS.add, data: { name } }).then((res) => {
         console.log("Get Supplier: ", res);
+        if (!res.status) {
+          dispatch(addSupplierAction(res));
+        }
       });
 
       setName("");

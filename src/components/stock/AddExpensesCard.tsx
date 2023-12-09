@@ -6,10 +6,13 @@ import { useApi } from "@/hooks";
 import { RootState } from "@/redux/store";
 import { EXPENSES } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
-import { GridColDef } from "@mui/x-data-grid";
+import { expenseProps } from "@/utils/types";
+import { Tooltip } from "@mui/material";
+import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FaRegEdit } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
@@ -18,54 +21,90 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { get } = useApi();
-  const [expensesData, setExpensesData] = useState([]);
+  const [expensesData, setExpensesData] = useState<expenseProps[] | null>([]);
+  const [editData, setEditData] = useState<null | expenseProps>(null);
+  const [showEdit, setShowEdit] = useState(false);
+
   useEffect(() => {
     if (id != null) {
-      get({ url: EXPENSES.getRecordById, params: { id } }).then((res) => {
-        console.log("EXPENSES.getRecordById: ", { res });
-        if (res.status) {
-          setExpensesData([]);
-        } else {
-          setExpensesData(res);
+      get({ url: EXPENSES.getExpensesForFarmRecord, params: { id } }).then(
+        (res) => {
+          console.log("EXPENSES.getRecordById: ", { res });
+          if (res.status) {
+            setExpensesData([]);
+          } else {
+            setExpensesData(res);
+          }
         }
-      });
+      );
     }
   }, [window.location]);
+
+  const handleEditExpense = useCallback(() => {}, []);
+
   const columns: GridColDef[] =
     !expensesData || expensesData?.length <= 0
       ? []
-      : createDataColumns(expensesData[0], (s: string) =>
-          t("supplierTable." + s)
-        );
+      : createDataColumns(expensesData[0], (s: string) => t("table." + s));
   const customeColumns = useMemo(() => {
-    return columns
-      .filter(
-        (col) =>
-          col.field !== "expenseID" &&
-          col.field !== "farmRecordID" &&
-          col.field !== "created_Date"
-      )
-      .map((col) =>
-        col.field === "expenseDate"
-          ? {
-              ...col,
-              valueFormatter: (params: any) => formatDate(params.value),
-              width: 150,
-              type: "date",
-              align: "center",
-              headerAlign: "center",
-            }
-          : col.field === "expenseRecordNotes"
-          ? { ...col, width: 150 }
-          : col.field === "expenseName"
-          ? { ...col, width: 150 }
-          : col
-      );
+    if (columns.length <= 0) return columns;
+    return [
+      ...columns
+        .filter(
+          (col) =>
+            col.field !== "expenseID" &&
+            col.field !== "farmRecordID" &&
+            col.field !== "created_Date" &&
+            col.field !== "expenseID"
+          // col.field !== "expenseRecordID"
+        )
+        .map((col) =>
+          col.field === "expenseDate"
+            ? {
+                ...col,
+                valueFormatter: (params: any) => formatDate(params.value),
+                width: 150,
+                type: "date",
+                align: "center",
+                headerAlign: "center",
+              }
+            : col.field === "expenseRecordNotes"
+            ? { ...col, width: 150 }
+            : col.field === "expenseName"
+            ? { ...col, width: 150 }
+            : col.field === "additionalNotes"
+            ? { ...col, width: 150 }
+            : col
+        ),
+      {
+        field: "actions",
+        headerName: t("table.actions"),
+        width: 150,
+        type: "actions",
+        getActions: (params: any) => {
+          const { row } = params;
+          return [
+            <Tooltip title={t("common.edit")}>
+              <GridActionsCellItem
+                icon={<FaRegEdit size={16} />}
+                label="Edit"
+                sx={{ color: "primary.main" }}
+                onClick={() => {
+                  setShowEdit(true);
+                  setEditData(row);
+                }}
+              />
+            </Tooltip>,
+          ];
+        },
+      },
+    ];
   }, [columns]);
+  console.log({expensesData})
   return (
     <div>
       <PageTitle
-        className={`mb-4 col-span-1 flex justify-between items-center !text-xl`}
+        className={`mb-4 col-span-1 flex justify-between items-center`}
         title={t("AddToStock.expenses")}
       >
         <AddExpenseToStock
@@ -73,13 +112,18 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
           farmId={farmId}
           setExpensesData={setExpensesData}
           expensesData={expensesData}
+          onShowPress={() => setShowEdit(true)}
+          show={showEdit}
+          onClose={() => setShowEdit(false)}
+          editData={editData}
+          setEditData={setEditData}
         />
       </PageTitle>
       <div className="grid grid-cols-1">
         <CustomTable
           rows={expensesData || []}
           columns={customeColumns as any}
-          getRowId={(item) => item.farmRecordID}
+          getRowId={(item) => item.expenseRecordID}
         />
       </div>
     </div>

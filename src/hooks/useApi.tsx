@@ -22,30 +22,14 @@ export default () => {
   );
   const token = logedUser?.token;
   const dispatch = useDispatch();
-  // const navigation = useNavigation<ScreenNavigationProp>();
-  // console.log( logedUser?.token);
-  // console.log({logedUser});
+
   const onCatchError = (error: AxiosError) => {
     console.log("on chatch error: ", error);
     if (error.response) {
-      // const { status, data }: any = error.response;
-      console.log("error.response: ", error.response);
-
+      // console.log("error.response: ", error.response);
       return error.response;
-      // switch (status) {
-      //   case 404:
-      //     return { error: "Server Error " + status, message: data?.message };
-      //   case 401:
-      //     // navigation.replace('Login');
-      //     return { error: "Unauthorized " + status, message: data?.message };
-      //   case 403:
-      //     return { error: "Forbidden" + status, message: data?.message };
-      //   default:
-      //     return { error: "Server Error " + status, message: data?.message };
-      // }
     } else if (error.request) {
       // console.log('error.request: ', error.request);
-      // return {error: i18next.t('Make sure about internet')};
     }
     return { error: "Connection Error.", data: "Connection Error." };
   };

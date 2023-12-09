@@ -6,13 +6,16 @@ import { useApi } from "@/hooks";
 import { SUPPLIERS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
-import { LinearProgress } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import { LinearProgress, Tooltip } from "@mui/material";
+import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FaRegEdit } from "react-icons/fa";
 import { GiFarmer } from "react-icons/gi";
 
 export default function Home() {
+  const router = useRouter();
   const { t } = useTranslation();
   const [showEdit, setShowEdit] = useState(false);
   const [id, setId] = useState<null | string>(null);
@@ -50,27 +53,53 @@ export default function Home() {
         );
 
   const customeColumns = useMemo(() => {
-    return columns
-      .filter(
-        (col) =>
-          col.field !== "farmsID" &&
-          col.field !== "productID" &&
-          col.field !== "created_Date"
-      )
-      .map((col) =>
-        col.field === "supplyDate"
-          ? {
-              ...col,
-              valueFormatter: (params: any) => formatDate(params.value),
-              width: 150,
-              type: "date",
-              align: "center",
-              headerAlign: "center",
-            }
-          : col.field === "farmsNotes"
-          ? { ...col, width: 200 }
-          : col
-      );
+    if (columns?.length <= 0) {
+      return [];
+    }
+
+    return [
+      ...columns
+        .filter(
+          (col) =>
+            col.field !== "farmsID" &&
+            col.field !== "productID" &&
+            col.field !== "created_Date"
+        )
+        .map((col) =>
+          col.field === "supplyDate"
+            ? {
+                ...col,
+                valueFormatter: (params: any) => formatDate(params.value),
+                width: 150,
+                type: "date",
+                align: "center",
+                headerAlign: "center",
+              }
+            : col.field === "farmsNotes"
+            ? { ...col, width: 200 }
+            : col
+        ),
+      {
+        field: "action",
+        headerName: t("table.actions"),
+        width: 150,
+        type: "actions",
+        getActions: (params: any) => {
+          const { id } = params;
+
+          return [
+            <Tooltip title={t("common.edit")}>
+              <GridActionsCellItem
+                icon={<FaRegEdit size={16} />}
+                label="Edit"
+                sx={{ color: "primary.main" }}
+                onClick={() => router.push("/add-to-stock?id=" + id)}
+              />
+            </Tooltip>,
+          ];
+        },
+      },
+    ];
   }, [columns]);
 
   if (id === null || !supplier || !supplierData) {

@@ -35,25 +35,18 @@ export const createDataColumns = (
   align: "center";
 }[] => {
   if (!data) {
-    return [
-      {
-        field: "",
-        headerName: "",
-        width: 100,
-        align: "center",
-        headerAlign: "center",
-      },
-    ];
+    return [];
   }
   const keys = Object?.keys(data);
   const result = keys.reduce((prev: any, curr) => {
+   
     return [
       ...prev,
       ...[
         {
           field: curr,
           headerName: t(curr + "") + "",
-          width: 100,
+          width: curr.indexOf("ID") ? 80 : 120,
         },
       ],
     ];

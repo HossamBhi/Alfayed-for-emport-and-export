@@ -1,6 +1,6 @@
 export type productProps = {
-  productID: number;
-  productName: string;
+  id: number;
+  name: string;
   productUnitPrice: number;
   productNote: string;
   created_Date: Date | string;

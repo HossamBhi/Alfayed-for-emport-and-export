@@ -31,6 +31,7 @@ export const EXPENSES = {
   addRecord: "AddExpenseRecord",
   getRecordById: "GetExpenseRecordById",
   updateRecord: "UpdateExpenseRecord",
+  getExpensesForFarmRecord: "GetExpensesForFarmRecord",
 };
 export const EXPENSES_TYPE = {
   getAll: "GetAllExpensetypes",
@@ -40,7 +41,7 @@ export const EXPENSES_TYPE = {
 };
 
 export const PRODUCTS = {
-  getAll: "GetStoreProducts",
+  getAll: "GetAllProducts",
   add: "AddNewProduct",
   update: "UpdateProduct",
 };

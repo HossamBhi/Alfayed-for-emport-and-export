@@ -123,13 +123,13 @@ export default function Home() {
   ) => {
     setValues({
       ...values,
-      [name + "ID"]: value?.id || value?.productID || "",
-      [name + "Name"]: value?.name || value?.productName || "",
+      [name + "ID"]: value?.id || "",
+      [name + "Name"]: value?.name || "",
     });
 
     setErrors((v) => ({
       ...v,
-      [name + "ID"]: value?.id || value?.productID ? false : true,
+      [name + "ID"]: value?.id ? false : true,
     }));
   };
 
@@ -230,7 +230,7 @@ export default function Home() {
               className="flex-1"
               clearOnEscape
               options={products || []}
-              getOptionLabel={(item) => item.productName}
+              getOptionLabel={(item) => item.name}
               id="product"
               onChange={(e, value) => {
                 handleSelectChange("product", value as any);
@@ -241,8 +241,8 @@ export default function Home() {
               // inputValue={values.productName || ""}
               value={
                 {
-                  productID: values.productID,
-                  productName: values.productName,
+                  id: values.productID,
+                  name: values.productName,
                 } as any
               }
               renderInput={(params) => (
@@ -254,7 +254,7 @@ export default function Home() {
                 />
               )}
             />
-            <AddPropduct showButtonTitle />
+            <AddPropduct showButtonTitle {...{ products, setProducts }} />
           </div>
           <FormControl>
             <CustomInput
@@ -293,22 +293,13 @@ export default function Home() {
             />
           </FormControl>
           <FormControl>
-            <CustomInput
-              id="discount"
-              label={t("AddToStock.discount")}
-              value={values.discount}
-              onChange={handleChangeValue}
-              type="number"
-            />
-          </FormControl>{" "}
-          <FormControl>
             <CustomSelect
               items={[
                 { id: 1, name: t("AddToStock.discountPercentage") },
                 { id: 2, name: t("AddToStock.discountFlat") },
               ]}
-              id="discount"
-              label={t("AddToStock.discount")}
+              id="discountType"
+              label={t("AddToStock.discountType")}
               onChange={(e, item) => {
                 const { value } = e.target;
                 setValues({
@@ -316,11 +307,18 @@ export default function Home() {
                   isPercentage: value === 1,
                 });
               }}
-
-              // value={values.discount}
-              // onChange={handleChangeValue}
             />
           </FormControl>
+          <FormControl>
+            <CustomInput
+              id="discount"
+              label={t("AddToStock.discount")}
+              value={values.discount}
+              onChange={handleChangeValue}
+              type="number"
+            />
+          </FormControl>
+
           <FormControl>
             <CustomInput
               id="netQuantity"

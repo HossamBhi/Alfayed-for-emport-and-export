@@ -16,6 +16,8 @@ type AddPropductProps = {
   editData?: any;
   showButtonTitle?: boolean;
   setEditData?: (d: productProps) => void;
+  setProducts?: (v: productProps[]) => void;
+  products?: productProps[];
 };
 
 const AddPropduct = ({
@@ -25,6 +27,8 @@ const AddPropduct = ({
   editData,
   showButtonTitle,
   setEditData,
+  setProducts,
+  products,
 }: AddPropductProps) => {
   const { post, put } = useApi();
   const { t } = useTranslation();
@@ -48,6 +52,10 @@ const AddPropduct = ({
     } else {
       post({ url: PRODUCTS.add, data: { name } }).then((res) => {
         console.log("Add PRODUCTS: ", res);
+        if (!res.status) {
+          if (setProducts && products)
+            setProducts && setProducts([res, ...products]);
+        }
       });
 
       setName("");

@@ -54,7 +54,7 @@ const AddExpenses = ({
   const handleOnCloseAddProduct = () => {
     onClose ? onClose() : setShowAddProduct(false);
   };
-  
+
   const callAPI = () => {
     if (!isNotEmpty(name)) {
       return setErrors({ ...errors, name: true });
@@ -166,7 +166,7 @@ const AddExpenses = ({
           </div>
         </DialogContent>
         <DialogActions>
-          <CustomButton onClick={handleOnCloseAddProduct}>
+          <CustomButton variant="contained" onClick={handleOnCloseAddProduct}>
             {t("common.close")}
           </CustomButton>
           <CustomButton onClick={callAPI}>

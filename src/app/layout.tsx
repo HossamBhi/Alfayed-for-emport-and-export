@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "الفايد للاستيراد والتصدير",
-  description: "الفايد للاستيراد والتصدير dashboard",
+  description: "الفايد للاستيراد والتصدير",
 };
 
 export default function RootLayout({
