@@ -32,12 +32,13 @@ export const EXPENSES = {
   getRecordById: "GetExpenseRecordById",
   updateRecord: "UpdateExpenseRecord",
   getExpensesForFarmRecord: "GetExpensesForFarmRecord",
+  getExpensesWithData: "/GetExpensesWithData",
 };
 export const EXPENSES_TYPE = {
   getAll: "GetAllExpensetypes",
   getById: "GetExpenseById",
   add: "AddExpenseType",
-  update: "/UpdateExpense",
+  update: "UpdateExpense",
 };
 
 export const PRODUCTS = {

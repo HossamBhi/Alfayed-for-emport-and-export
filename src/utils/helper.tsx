@@ -39,14 +39,15 @@ export const createDataColumns = (
   }
   const keys = Object?.keys(data);
   const result = keys.reduce((prev: any, curr) => {
-   
     return [
       ...prev,
       ...[
         {
           field: curr,
           headerName: t(curr + "") + "",
-          width: curr.indexOf("ID") ? 80 : 120,
+          width: curr.indexOf("ID") > 0 ? 80 : 120,
+          headerAlign: "center",
+          align: "center",
         },
       ],
     ];

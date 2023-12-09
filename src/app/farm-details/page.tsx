@@ -3,6 +3,7 @@ import { UserCard } from "@/components/cards";
 import { CustomTable } from "@/components/common";
 import { AddFarm } from "@/components/popups";
 import { useApi } from "@/hooks";
+import { DISCOUNT_TYPES } from "@/utils/appDB";
 import { SUPPLIERS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
@@ -80,6 +81,18 @@ export default function Home() {
               }
             : col.field === "farmsNotes"
             ? { ...col, width: 200 }
+            : col.field === "isPercentage"
+            ? {
+                ...col,
+                width: 120,
+                headerName: t("AddToStock.discountType"),
+                valueGetter: (params: any) => {
+                  if (params.value === 1) {
+                    return t("AddToStock.discountPercentage");
+                  }
+                  return t("AddToStock.discountFlat");
+                },
+              }
             : col
         ),
       {

@@ -1,7 +1,5 @@
-import React, { ComponentProps } from "react";
 import { Box, useTheme } from "@mui/material";
-import { GiFarmer } from "react-icons/gi";
-import { useRouter } from "next/navigation";
+import { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons";
 import { FaEdit } from "react-icons/fa";

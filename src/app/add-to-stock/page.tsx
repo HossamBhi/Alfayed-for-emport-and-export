@@ -6,6 +6,7 @@ import { AddExpensesCard } from "@/components/stock";
 import { useApi } from "@/hooks";
 import { RootState } from "@/redux/store";
 import { saveSuppliersAction } from "@/redux/suppliers";
+import { DISCOUNT_TYPES } from "@/utils/appDB";
 import { SUPPLIERS, STORE, PRODUCTS } from "@/utils/endpoints";
 import { formatDate } from "@/utils/helper";
 import { productProps, supplierProps } from "@/utils/types";
@@ -294,10 +295,7 @@ export default function Home() {
           </FormControl>
           <FormControl>
             <CustomSelect
-              items={[
-                { id: 1, name: t("AddToStock.discountPercentage") },
-                { id: 2, name: t("AddToStock.discountFlat") },
-              ]}
+              items={DISCOUNT_TYPES()}
               id="discountType"
               label={t("AddToStock.discountType")}
               onChange={(e, item) => {

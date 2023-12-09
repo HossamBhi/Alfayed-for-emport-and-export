@@ -4,6 +4,7 @@ import CustomButton from "./CustomButton";
 import CustomSelect from "./CustomSelect";
 import CustomTable from "./CustomTable";
 import PageTitle from "./PageTitle";
+import renderCellExpand from "./GridCellExpand";
 
 export {
   CustomDialog,
@@ -12,4 +13,5 @@ export {
   CustomSelect,
   CustomTable,
   PageTitle,
+  renderCellExpand
 };

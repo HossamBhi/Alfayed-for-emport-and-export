@@ -1,9 +1,9 @@
 "use client";
-import { ExpensesCard, UserCard } from "@/components/cards";
-import { CustomTable } from "@/components/common";
-import { AddExpenses, AddFarm } from "@/components/popups";
+import { ExpensesCard } from "@/components/cards";
+import { CustomTable, renderCellExpand } from "@/components/common";
+import { AddExpenses } from "@/components/popups";
 import { useApi } from "@/hooks";
-import { EXPENSES, SUPPLIERS } from "@/utils/endpoints";
+import { EXPENSES } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
 import { LinearProgress } from "@mui/material";
@@ -11,7 +11,6 @@ import { GridColDef } from "@mui/x-data-grid";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { GiFarmer } from "react-icons/gi";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -29,12 +28,12 @@ export default function Home() {
     // const ID = searchQuiry.get("id");
     if (id != null) {
       // setId(ID);
-      get({ url: EXPENSES.getById, params: { id } }).then((res) => {
-        console.log("SUPPLIERS.getById", { res });
+      get({ url: EXPENSES.getExpensesWithData, params: { id } }).then((res) => {
+        console.log("EXPENSES.getExpensesWithData", { res });
         // if (Array.isArray(res)) {
         if (!res.status) {
-          setSupplier(res);
-          setSupplierData(res?.farmRecords || []);
+          setSupplier({ ...res, totalRemaining: res.total });
+          setSupplierData(res?.expensesList || []);
         } else {
           setSupplierData([]);
           alert("Error " + res.status + ": " + res.data);
@@ -46,20 +45,19 @@ export default function Home() {
   const columns: GridColDef[] =
     !supplierData || supplierData?.length <= 0
       ? []
-      : createDataColumns(supplierData[0], (s: string) =>
-          t("supplierTable." + s)
-        );
+      : createDataColumns(supplierData[0], (s: string) => t("table." + s));
 
   const customeColumns = useMemo(() => {
     return columns
       .filter(
         (col) =>
-          col.field !== "farmsID" &&
+          col.field !== "farmRecordID" &&
           col.field !== "productID" &&
-          col.field !== "created_Date"
+          col.field !== "created_Date" &&
+          col.field !== "expenseID"
       )
       .map((col) =>
-        col.field === "supplyDate"
+        col.field === "expenseDate"
           ? {
               ...col,
               valueFormatter: (params: any) => formatDate(params.value),
@@ -68,8 +66,8 @@ export default function Home() {
               align: "center",
               headerAlign: "center",
             }
-          : col.field === "farmsNotes"
-          ? { ...col, width: 200 }
+          : col.field === "expenseRecordNotes"
+          ? { ...col, width: 200, renderCell: renderCellExpand }
           : col
       );
   }, [columns]);
@@ -92,9 +90,8 @@ export default function Home() {
           <ExpensesCard
             item={supplier}
             containerStyle={"bg-white hover:bg-white mt-0"}
-            // showEdit
-            // Icon={GiFarmer}
-            // onEdit={() => setShowEdit(true)}
+            showEdit
+            onEdit={() => setShowEdit(true)}
             // onClick={() => setShowEdit(true)}
           />
         )}
@@ -111,7 +108,7 @@ export default function Home() {
         <CustomTable
           rows={supplierData || []}
           columns={customeColumns as any}
-          getRowId={(item) => item.farmRecordID}
+          getRowId={(item) => item.expenseRecordID}
         />
       </div>
     </main>

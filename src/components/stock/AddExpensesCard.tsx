@@ -40,8 +40,6 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
     }
   }, [id]);
 
-  const handleEditExpense = useCallback(() => {}, []);
-
   const columns: GridColDef[] =
     !expensesData || expensesData?.length <= 0
       ? []
