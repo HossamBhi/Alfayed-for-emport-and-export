@@ -178,7 +178,11 @@ export default function Home() {
       setIsLoad(true);
       post({
         url: SUPPLIERS.addRecord,
-        data: { ...values, total: calculateTotal },
+        data: {
+          ...values,
+          total: calculateTotal,
+          netQuantity: calculateNetQuantity,
+        },
       }).then((res) => {
         console.log("SUPPLIERS.addRecord: ", { res });
         if (res.farmRecordID) {
