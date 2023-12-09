@@ -1,3 +1,4 @@
 import AddExpensesCard from "./AddExpensesCard";
+import ExpenseForm from "./ExpenseForm";
 
-export { AddExpensesCard };
+export { AddExpensesCard, ExpenseForm };

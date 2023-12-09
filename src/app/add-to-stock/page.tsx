@@ -9,7 +9,7 @@ import { saveSuppliersAction } from "@/redux/suppliers";
 import { SUPPLIERS, STORE, PRODUCTS } from "@/utils/endpoints";
 import { formatDate } from "@/utils/helper";
 import { productProps, supplierProps } from "@/utils/types";
-import { Autocomplete, FormControl } from "@mui/material";
+import { Autocomplete, CircularProgress, FormControl } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,11 +20,12 @@ export default function Home() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  // console.log(searchParams.get("id"));
+  const [isLoad, setIsLoad] = useState(false);
+
   const suppliers = useSelector((state: RootState) => state.suppliers);
   const { t } = useTranslation();
   const [products, setProducts] = useState<productProps[]>([]);
-  // const [id, setId] = useState<null | string>(null);
+
   const { post } = useApi();
   const [values, setValues] = useState({
     farmsName: "",
@@ -172,21 +173,23 @@ export default function Home() {
     [searchParams]
   );
   const handleSubmit = () => {
-    isValid();
     if (isValid()) {
+      setIsLoad(true);
       post({
         url: SUPPLIERS.addRecord,
         data: { ...values, total: calculateTotal },
       }).then((res) => {
         console.log("SUPPLIERS.addRecord: ", { res });
-        if (res.recordId) {
-          router.push(pathname + "?" + createQueryString("id", res.recordId));
+        if (res.farmRecordID) {
+          router.push(
+            pathname + "?" + createQueryString("id", res.farmRecordID)
+          );
         }
+        setIsLoad(false);
       });
     }
   };
 
-  // TODO: make a float precentage
   return (
     <main className="flex min-h-screen flex-col p-4">
       <div className="bg-white p-4 border rounded-lg flex flex-col mb-4">
@@ -207,16 +210,16 @@ export default function Home() {
               }}
               // value={suppliers?.find((item) => item.id == values.farmsID)}
               value={{ id: values.farmsID, name: values.farmsName } as any}
-              inputValue={values.farmsName || ""}
+              // inputValue={values.farmsName || ""}
               renderInput={(params) => (
                 <CustomInput
                   {...params}
                   error={errors.farmsID}
                   id="farms"
                   label={t("AddToStock.name")}
-                  value={
-                    suppliers?.find((item) => item.id === values.farmsID)?.name
-                  }
+                  // value={
+                  //   suppliers?.find((item) => item.id === values.farmsID)?.name
+                  // }
                 />
               )}
             />
@@ -235,7 +238,7 @@ export default function Home() {
               // value={products?.find(
               //   (item) => item.productID === values.productID
               // )}
-              inputValue={values.productName || ""}
+              // inputValue={values.productName || ""}
               value={
                 {
                   productID: values.productID,
@@ -366,13 +369,19 @@ export default function Home() {
             />
           </FormControl>
           {/* <div className="col-span-2 md:flex hidden"></div> */}
-          <CustomButton variant="contained" onClick={handleSubmit}>
-            {t("AddToStock.save")}
-          </CustomButton>
+          {isLoad ? (
+            <div className="flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ) : (
+            <CustomButton variant="contained" onClick={handleSubmit}>
+              {t("AddToStock.save")}
+            </CustomButton>
+          )}
         </form>
       </div>
 
-      {id && <AddExpensesCard />}
+      <AddExpensesCard farmId={id} />
     </main>
   );
 }
