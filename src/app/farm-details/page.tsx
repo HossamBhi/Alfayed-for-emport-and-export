@@ -8,7 +8,7 @@ import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
 import { LinearProgress, Tooltip } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaRegEdit } from "react-icons/fa";
@@ -17,19 +17,22 @@ import { GiFarmer } from "react-icons/gi";
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [showEdit, setShowEdit] = useState(false);
-  const [id, setId] = useState<null | string>(null);
+  // const [id, setId] = useState<null | string>(null);
   const { get } = useApi();
   const [supplier, setSupplier] = useState<null | supplierProps>(null);
   const [supplierData, setSupplierData] = useState<null | supplierDataProps[]>(
     null
   );
+
   useEffect(() => {
-    const searchQuiry = new URLSearchParams(window.location.search);
-    const ID = searchQuiry.get("id");
-    if (ID != null) {
-      setId(ID);
-      get({ url: SUPPLIERS.getRecordWithData, params: { recordId: ID } }).then(
+    // const searchQuiry = new URLSearchParams(window.location.search);
+    // const ID = searchQuiry.get("id");
+    if (id != null) {
+      // setId(ID);
+      get({ url: SUPPLIERS.getRecordWithData, params: { recordId: id } }).then(
         (res) => {
           console.log("farm data get Record With Data", { res });
           // if (Array.isArray(res)) {
@@ -43,7 +46,7 @@ export default function Home() {
         }
       );
     }
-  }, [window.location]);
+  }, [id]);
 
   const columns: GridColDef[] =
     !supplierData || supplierData?.length <= 0
@@ -88,7 +91,7 @@ export default function Home() {
           const { id } = params;
 
           return [
-            <Tooltip title={t("common.edit")}>
+            <Tooltip key={id} title={t("common.edit")}>
               <GridActionsCellItem
                 icon={<FaRegEdit size={16} />}
                 label="Edit"

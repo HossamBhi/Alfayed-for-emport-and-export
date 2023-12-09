@@ -110,7 +110,7 @@ export default function Home() {
         }
       }
     });
-  }, [window.location]);
+  }, [id]);
 
   const handleChangeValue = (e: any) => {
     const { id, value } = e.target;

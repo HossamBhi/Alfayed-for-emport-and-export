@@ -53,12 +53,12 @@ const ExpenseForm = ({
   ) => {
     setValues({
       ...values,
-      [name + "ID"]: value?.id || value?.productID || "",
-      [name + "Name"]: value?.name || value?.productName || "",
+      [name + "ID"]: value?.id || "",
+      [name + "Name"]: value?.name || "",
     });
     setErrors((v: any) => ({
       ...v,
-      [name + "ID"]: value?.id || value?.productID ? false : true,
+      [name + "ID"]: value?.id ? false : true,
     }));
   };
   useEffect(() => {

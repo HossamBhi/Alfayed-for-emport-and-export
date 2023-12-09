@@ -41,7 +41,7 @@ export default function Home() {
         }
       });
     }
-  }, [window.location]);
+  }, [id]);
 
   const columns: GridColDef[] =
     !supplierData || supplierData?.length <= 0
@@ -92,10 +92,10 @@ export default function Home() {
           <ExpensesCard
             item={supplier}
             containerStyle={"bg-white hover:bg-white mt-0"}
-            showEdit
-            Icon={GiFarmer}
-            onEdit={() => setShowEdit(true)}
-            onClick={() => setShowEdit(true)}
+            // showEdit
+            // Icon={GiFarmer}
+            // onEdit={() => setShowEdit(true)}
+            // onClick={() => setShowEdit(true)}
           />
         )}
         <AddExpenses

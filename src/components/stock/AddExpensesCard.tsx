@@ -38,7 +38,7 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
         }
       );
     }
-  }, [window.location]);
+  }, [id]);
 
   const handleEditExpense = useCallback(() => {}, []);
 
@@ -82,9 +82,9 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
         width: 150,
         type: "actions",
         getActions: (params: any) => {
-          const { row } = params;
+          const { row, id } = params;
           return [
-            <Tooltip title={t("common.edit")}>
+            <Tooltip key={id} title={t("common.edit")}>
               <GridActionsCellItem
                 icon={<FaRegEdit size={16} />}
                 label="Edit"
@@ -100,7 +100,6 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
       },
     ];
   }, [columns]);
-  console.log({expensesData})
   return (
     <div>
       <PageTitle
