@@ -131,7 +131,7 @@ const AddExpenseToStock = ({
             // );
             // let newData =
             setExpensesData(
-              expensesData.map((item) =>
+              expensesData.map((item: any) =>
                 item?.expenseRecordID === res?.expenseRecordID ? res : item
               )
             );
