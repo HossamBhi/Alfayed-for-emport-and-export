@@ -2,6 +2,7 @@ import React, { ComponentProps } from "react";
 import { Box, useTheme } from "@mui/material";
 import { GiFarmer, GiPayMoney } from "react-icons/gi";
 import { useRouter } from "next/navigation";
+import { t } from "i18next";
 
 interface ExpensesCardProps {
   item: any;
@@ -13,6 +14,7 @@ const ExpensesCard = ({ item, containerStyle }: ExpensesCardProps) => {
   const {
     palette: { primary },
   } = useTheme();
+
   return (
     <div
       className={`flex hover:bg-gray-100 flex-1 justify-center items-center my-3 bg-gray-50 rounded-lg p-4 cursor-pointer ${containerStyle}`}
@@ -30,10 +32,9 @@ const ExpensesCard = ({ item, containerStyle }: ExpensesCardProps) => {
         <p className="text-xs text-gray-500">{item.expenseTypeName}</p>
       </div>
 
-      <div className="">
-        <p className="font-bold text-lg">{item.total}</p>
-
-        {/* <p>{item.date}</p> */}
+      <div className="text-center">
+        <p className="text-gray-400 text-sm">{t("common.total")}</p>
+        <p className="font-bold text-lg">{item.totalRemaining || 0}</p>
       </div>
     </div>
   );
