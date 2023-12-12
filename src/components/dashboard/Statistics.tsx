@@ -31,7 +31,7 @@ const Statistics = () => {
     []
   );
   return (
-    <div className="p-4 grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <div className="md:p-4 p-2 grid grid-cols-1 lg:grid-cols-4 gap-4">
       <StatisticCard
         price={100000}
         label={t("dashboard.total")}

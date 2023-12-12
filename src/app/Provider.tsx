@@ -4,12 +4,12 @@ import store from "@/redux/store";
 import { cacheLrt, cacheRtl, lightTheme } from "@/utils/schema";
 import { CacheProvider } from "@emotion/react";
 import { ThemeProvider } from "@mui/material";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useLayoutEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Provider as ReduxProvider } from "react-redux";
 const Provider = ({ children }: { children: ReactNode }) => {
   const { i18n } = useTranslation();
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.dir = i18n.dir();
   }, [i18n.dir()]);
   return (

@@ -8,10 +8,10 @@ import {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col ">
+    <main className="flex min-h-screen flex-col">
       <Statistics />
 
-      <div className="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="md:p-4 p-2 grid grid-cols-1 lg:grid-cols-3 gap-4">
         <FarmsAndFarmers />
         <Expenses />
         <Clients />

@@ -23,7 +23,7 @@ const App = ({ children }: { children: ReactNode }) => {
   // useEffect(() => {
   //   if (profile === null) route.push("/login");
   // }, [profile]);
-
+  const [isShowMenu, setIsShowMenu] = useState(false);
   const { get } = useApi();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -87,24 +87,27 @@ const App = ({ children }: { children: ReactNode }) => {
           {pathname.includes("/login") ? (
             <>{children}</>
           ) : (
-            <>
-              <div className="z-20">
-                <SideMenu />
-              </div>
+            <div className="flex">
+              {/* <div className="z-20"> */}
+              <SideMenu isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu} />
+              {/* </div> */}
               <div
-                className={`bg-gray-100 ${
-                  i18n.dir() === "rtl" ? "mr-20" : "ml-20"
-                }`}
+                className={`bg-gray-100 w-full`}
+                // className={`bg-gray-100 ${
+                //   i18n.dir() === "rtl" ? "mr-20" : "ml-20"
+                // }`}
               >
                 {isLoad && (
-                  <div className="absolute top-0 w-full rounded">
+                  <div className="w-full rounded">
+                    {/* <div className="absolute top-0 w-full rounded"> */}
                     <LinearProgress className="rounded" />
                   </div>
                 )}
-                <PageHeader />
+
+                <PageHeader {...{ isShowMenu, setIsShowMenu }} />
                 {children}
               </div>
-            </>
+            </div>
           )}
         </>
       )}
