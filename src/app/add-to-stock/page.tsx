@@ -22,12 +22,11 @@ export default function Home() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [isLoad, setIsLoad] = useState(false);
-
   const suppliers = useSelector((state: RootState) => state.suppliers);
   const { t } = useTranslation();
   const [products, setProducts] = useState<productProps[]>([]);
 
-  const { post } = useApi();
+  const { post, put } = useApi();
   const [values, setValues] = useState({
     farmsName: "",
     farmsID: 0,
@@ -176,29 +175,50 @@ export default function Home() {
   const handleSubmit = () => {
     if (isValid()) {
       setIsLoad(true);
-      post({
-        url: SUPPLIERS.addRecord,
-        data: {
-          ...values,
-          total: calculateTotal,
-          netQuantity: calculateNetQuantity,
-        },
-      }).then((res) => {
-        console.log("SUPPLIERS.addRecord: ", { res });
-        if (res.farmRecordID) {
-          router.push(
-            pathname + "?" + createQueryString("id", res.farmRecordID)
-          );
-        }
-        setIsLoad(false);
-      });
+      if (id) {
+        put({
+          url: SUPPLIERS.updateRecord,
+          params: { recordId: id },
+          data: {
+            ...values,
+            total: calculateTotal,
+            netQuantity: calculateNetQuantity,
+          },
+        }).then((res) => {
+          console.log("SUPPLIERS.addRecord: ", { res });
+          if (res.farmRecordID) {
+            router.push(
+              pathname + "?" + createQueryString("id", res.farmRecordID)
+            );
+          }
+          setIsLoad(false);
+        });
+      } else
+        post({
+          url: SUPPLIERS.addRecord,
+          data: {
+            ...values,
+            total: calculateTotal,
+            netQuantity: calculateNetQuantity,
+          },
+        }).then((res) => {
+          console.log("SUPPLIERS.addRecord: ", { res });
+          if (res.farmRecordID) {
+            router.push(
+              pathname + "?" + createQueryString("id", res.farmRecordID)
+            );
+          }
+          setIsLoad(false);
+        });
     }
   };
 
   return (
     <main className="flex min-h-screen flex-col p-4">
       <div className="bg-white p-4 border rounded-lg flex flex-col mb-4">
-        <h4 className="mb-4 col-span-1">{t("AddToStock.addProduct")}</h4>
+        <h4 className="mb-4 col-span-1">
+          {id ? t("AddToStock.editProduct") : t("AddToStock.addProduct")}
+        </h4>
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
@@ -359,7 +379,7 @@ export default function Home() {
               type="number"
             />
           </FormControl>
-          <FormControl className="md:col-span-2 col-span-1">
+          <FormControl className={`col-span-1 md:col-span-2`}>
             <CustomInput
               id="farmsNotes"
               label={t("AddToStock.note")}
@@ -374,9 +394,25 @@ export default function Home() {
               <CircularProgress />
             </div>
           ) : (
-            <CustomButton variant="contained" onClick={handleSubmit}>
-              {t("AddToStock.save")}
-            </CustomButton>
+            <>
+              <CustomButton
+                variant="contained"
+                color={id? "secondary": "primary"}
+                onClick={handleSubmit}
+              >
+                {id ? t("common.edit") : t("common.save")}
+              </CustomButton>
+              {/* {id && (
+                <CustomButton
+                  variant="outlined"
+                  onClick={() => {
+                    router.back();
+                  }}
+                >
+                  {t("common.close")}
+                </CustomButton>
+              )} */}
+            </>
           )}
         </form>
       </div>

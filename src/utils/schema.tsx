@@ -15,7 +15,7 @@ export const lightTheme = createTheme(
     palette: {
       primary: { main: primary_color },
       secondary: {
-        main: "#F1F3F7", // surfaceVariant: '#F1F3F7',
+        main: "#1D7CB4", // surfaceVariant: '#F1F3F7',
         light: "#B8B8B8", // onSurfaceVariant: '#B8B8B8',
       },
       text: { primary: "#000", secondary: "#8D8D8D" },
