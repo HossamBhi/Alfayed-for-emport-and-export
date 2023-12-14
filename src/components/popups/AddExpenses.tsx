@@ -1,8 +1,14 @@
 "use client";
-import { DATA } from "@/data";
 import { useApi } from "@/hooks";
+import {
+  addExpenseAction,
+  editExpenseAction,
+  saveExpensesTypesAction,
+} from "@/redux/expenses";
+import { RootState } from "@/redux/store";
 import { EXPENSES, EXPENSES_TYPE } from "@/utils/endpoints";
 import { expenseProps } from "@/utils/types";
+import { isNotEmpty } from "@/utils/validation";
 import {
   Autocomplete,
   DialogActions,
@@ -13,16 +19,9 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 import { AddExpensesCategory, PopupButton } from ".";
 import { CustomButton, CustomDialog, CustomInput } from "../common";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import {
-  addExpenseAction,
-  editExpenseAction,
-  saveExpensesTypesAction,
-} from "@/redux/expenses";
-import { isNotEmpty } from "@/utils/validation";
 
 type AddExpensesProps = {
   onClose?: () => void;
@@ -31,6 +30,7 @@ type AddExpensesProps = {
   showButtonTitle?: boolean;
   editData?: any;
   setEditData?: (d: expenseProps) => void;
+  onShowClick?: () => void;
 };
 
 const AddExpenses = ({
@@ -40,6 +40,7 @@ const AddExpenses = ({
   editData,
   showButtonTitle,
   setEditData,
+  onShowClick,
 }: AddExpensesProps) => {
   const { expensesTypes } = useSelector((state: RootState) => state.expenses);
   const { post, put, get } = useApi();
@@ -54,6 +55,11 @@ const AddExpenses = ({
   const handleOnCloseAddProduct = () => {
     onClose ? onClose() : setShowAddProduct(false);
   };
+
+  useEffect(() => {
+    setName(editData?.name ? editData?.name : "");
+    setExpenseType(editData?.type ? editData?.type : "");
+  }, [editData]);
 
   const callAPI = () => {
     if (!isNotEmpty(name)) {
@@ -107,7 +113,11 @@ const AddExpenses = ({
   return (
     <div>
       {!hideShowBtn && (
-        <PopupButton onClick={() => setShowAddProduct(true)}>
+        <PopupButton
+          onClick={() =>
+            onShowClick ? onShowClick() : setShowAddProduct(true)
+          }
+        >
           {showButtonTitle && (
             <>
               <BsFillPlusCircleFill className="ltr:mr-4 rtl:ml-4" />{" "}

@@ -2,7 +2,7 @@
 import { useApi } from "@/hooks";
 import { SUPPLIERS } from "@/utils/endpoints";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { PopupButton } from ".";
@@ -18,6 +18,7 @@ type AddFarmProps = {
   editData?: any;
   showButtonTitle?: boolean;
   setEditData?: (d: supplierProps) => void;
+  onShowClick?: () => void;
 };
 
 const AddFarm = ({
@@ -27,6 +28,7 @@ const AddFarm = ({
   editData,
   showButtonTitle,
   setEditData,
+  onShowClick,
 }: AddFarmProps) => {
   const { post, put } = useApi();
   const { t } = useTranslation();
@@ -35,6 +37,11 @@ const AddFarm = ({
   const handleOnCloseAddProduct = () =>
     onClose ? onClose() : setShowAddProduct(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setName(editData?.name ? editData?.name : "");
+  }, [editData]);
+
   const callAPI = () => {
     if (editData) {
       put({
@@ -63,7 +70,11 @@ const AddFarm = ({
   return (
     <div>
       {!hideShowBtn && (
-        <PopupButton onClick={() => setShowAddProduct(true)}>
+        <PopupButton
+          onClick={() =>
+            onShowClick ? onShowClick() : setShowAddProduct(true)
+          }
+        >
           {showButtonTitle && (
             <>
               <BsFillPlusCircleFill className="ltr:mr-4 rtl:ml-4" />{" "}

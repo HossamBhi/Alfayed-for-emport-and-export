@@ -2,12 +2,14 @@
 import { useApi } from "@/hooks";
 import { clientProps } from "@/utils/types";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PopupButton } from ".";
 import { CustomButton, CustomDialog, CustomInput } from "../common";
 import { CLIENT } from "@/utils/endpoints";
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { addClientAction, editClientAction } from "@/redux/clients";
 
 type AddClientProps = {
   onClose?: () => void;
@@ -16,6 +18,7 @@ type AddClientProps = {
   editData?: any;
   showButtonTitle?: boolean;
   setEditData?: (d: clientProps) => void;
+  onShowClick?: () => void;
 };
 
 const AddClient = ({
@@ -25,6 +28,7 @@ const AddClient = ({
   editData,
   showButtonTitle,
   setEditData,
+  onShowClick,
 }: AddClientProps) => {
   const { post, put } = useApi();
   const { t } = useTranslation();
@@ -32,7 +36,12 @@ const AddClient = ({
   const [name, setName] = useState(editData?.name ? editData?.name : "");
   const handleOnCloseAddProduct = () =>
     onClose ? onClose : setShowAddProduct(false);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    setName(editData?.name ? editData?.name : "");
+  }, [editData]);
+  
   const callAPI = () => {
     if (editData) {
       put({
@@ -43,11 +52,15 @@ const AddClient = ({
         console.log("Update Cleint: ", res);
         if (res?.id) {
           setEditData && setEditData(res);
+          dispatch(editClientAction(res));
         }
       });
     } else {
       post({ url: CLIENT.add, data: { name } }).then((res) => {
         console.log("Update Cleint: ", res);
+        if (!res.status) {
+          dispatch(addClientAction(res));
+        }
       });
 
       setName("");
@@ -56,7 +69,11 @@ const AddClient = ({
   return (
     <div>
       {!hideShowBtn && (
-        <PopupButton onClick={() => setShowAddProduct(true)}>
+        <PopupButton
+          onClick={() =>
+            onShowClick ? onShowClick() : setShowAddProduct(true)
+          }
+        >
           {showButtonTitle && (
             <>
               <BsFillPlusCircleFill className="ltr:mr-4 rtl:ml-4" />{" "}

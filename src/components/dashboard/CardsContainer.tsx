@@ -3,6 +3,7 @@ import { ReactNode, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiOutlineSearch } from "react-icons/hi";
 import { CustomInput } from "../common";
+import { useRouter } from "next/navigation";
 
 type CardsContainerProps = {
   title: ReactNode;
@@ -10,6 +11,7 @@ type CardsContainerProps = {
   items: any[] | [];
   titleButton: ReactNode;
   isLoading?: boolean;
+  moreLink: string;
 };
 
 const CardsContainer = ({
@@ -18,11 +20,13 @@ const CardsContainer = ({
   Card,
   titleButton,
   isLoading,
+  moreLink,
 }: CardsContainerProps) => {
   const { t } = useTranslation();
   const {
     palette: { primary },
   } = useTheme();
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
   const filteredData = useMemo(
     () =>
@@ -38,7 +42,10 @@ const CardsContainer = ({
   return (
     <div className="relative col-span-1 m-auto w-full rounded-lg border bg-white p-4">
       <h2 className="flex items-center justify-between pb-4">
-        <div className="flex items-center">
+        <div
+          className="flex cursor-pointer items-center border-b-2 border-b-green-600 pb-2"
+          onClick={() => router.push(moreLink)}
+        >
           <p>{title}</p>
           <Box
             className="mx-2 rounded-sm p-1 text-xs"
@@ -72,7 +79,7 @@ const CardsContainer = ({
           </div>
         ) : (
           <div>
-            {filteredData.map((item, i) => (
+            {filteredData.slice(0, 5).map((item, i) => (
               <Card key={i} item={item} />
             ))}
           </div>

@@ -1,6 +1,7 @@
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { BsInboxes, BsInboxesFill } from "react-icons/bs";
-import { GiFruitTree } from "react-icons/gi";
+import { FaUserTie } from "react-icons/fa";
+import { GiFarmer, GiFruitTree, GiPayMoney } from "react-icons/gi";
 import { MdAddCircle, MdAddCircleOutline } from "react-icons/md";
 import { RiBankFill, RiBankLine } from "react-icons/ri";
 
@@ -22,6 +23,24 @@ export const SIDEMENU_LINKS = [
     url: "/add-to-stock",
     InActiveIcon: MdAddCircleOutline,
     ActiveIcon: MdAddCircle,
+  },
+  {
+    title: "farmsAndFarmers",
+    url: "/suppliers",
+    InActiveIcon: GiFarmer,
+    ActiveIcon: GiFarmer,
+  },
+  {
+    title: "expenses",
+    url: "/expenses",
+    InActiveIcon: GiPayMoney,
+    ActiveIcon: GiPayMoney,
+  },
+  {
+    title: "clients",
+    url: "/clients",
+    InActiveIcon: FaUserTie,
+    ActiveIcon: FaUserTie,
   },
   {
     title: "stock",

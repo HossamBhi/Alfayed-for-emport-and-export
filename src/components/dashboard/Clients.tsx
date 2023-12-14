@@ -34,6 +34,7 @@ const Clients = () => {
       title={t("client.clients")}
       titleButton={<AddClient />}
       items={clients || []}
+      moreLink="/clients"
       Card={({ item, ...params }) => (
         <UserCard
           item={item}

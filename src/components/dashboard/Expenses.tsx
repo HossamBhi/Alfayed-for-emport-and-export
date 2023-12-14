@@ -36,6 +36,7 @@ const Expenses = () => {
       titleButton={<AddExpenses />}
       items={expenses || []}
       Card={ExpensesCard}
+      moreLink="/expenses"
     />
   );
 };

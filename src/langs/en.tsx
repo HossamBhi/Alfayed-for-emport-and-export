@@ -13,7 +13,7 @@ export const en = {
       "save": "Save",
       "close": "Close",
       "edit": "Edit",
-      
+      "show": "Show details"
     },
     "menu": {
       "addToStock": "Add To Stock",
@@ -22,6 +22,9 @@ export const en = {
       "addSupplier": "Add Supplier",
       "products": "Products",
       "homepage": "Home",
+      "farmsAndFarmers": "Farms And Suppliers",
+      "clients": "Clients",
+      "expenses": "Expenses",
     },
     "AddFarm": {
       "addFarm": "Add Supplier",
@@ -91,6 +94,7 @@ export const en = {
       "name": "farm Name",
       "carNumber": "Car Number",
       "date": "Date",
+      "supplyDate": "Date",
       "product": "Product",
       "number": "Number",
       "quantity": "Quantity",
@@ -100,6 +104,7 @@ export const en = {
       "payed": "Payed",
       "remaining": "Remaining",
       "total": "Total",
+      "totalRemaining": "Total",
       "note": "Note",
       "save": "Save",
       "edit": "Edit",

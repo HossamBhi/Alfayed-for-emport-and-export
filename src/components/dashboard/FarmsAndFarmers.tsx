@@ -40,6 +40,7 @@ const FarmsAndFarmers = () => {
       title={t("farmsAndFarmers")}
       titleButton={<AddFarm />}
       items={suppliers || []}
+      moreLink="/suppliers"
       Card={({ item, ...params }) => (
         <UserCard
           item={item}

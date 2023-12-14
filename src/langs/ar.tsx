@@ -8,6 +8,7 @@ export const ar = {
       "save": "حفظ",
       "close": "إغلاق",
       "edit": "تعديل",
+      "show": "عرض التفاصيل"
     },
     "product": {
       "addPropduct": "إضافة منتج",
@@ -21,6 +22,9 @@ export const ar = {
       "addSupplier": "إضافة مورد",
       "products": "المنتجات",
       "homepage": "الصفحة الرئيسية",
+      "farmsAndFarmers": "المزارع والموردين",
+      "expenses": "المصروفات",
+      "clients": "العملاء",
     },
     "dashboard": {
       "total": "اجمالي الخزنة",
@@ -91,6 +95,7 @@ export const ar = {
       "name": "اسم المورد",
       "carNumber": "رقم السياره",
       "date": "التاريخ",
+      "supplyDate": "التاريخ",
       "product": "المنتج",
       "number": "العدد",
       "quantity": "الكميه",
@@ -101,6 +106,7 @@ export const ar = {
       "remaining": "متبقي",
       "note": "ملحوظة",
       "total": "الاجمالي",
+      "totalRemaining": "الاجمالي",
       "save": "حفظ",
       "edit": "تعديل",
       "addProduct": "إضافة منتج جديد",

@@ -75,10 +75,10 @@ export default function Home() {
   if (id === null || !supplier || !supplierData) {
     return (
       <main className="flex min-h-screen flex-col">
-        <LinearProgress
+        {/* <LinearProgress
           sx={{ minWidth: "100%" }}
           className="absolute top-0 rounded"
-        />
+        /> */}
       </main>
     );
   }

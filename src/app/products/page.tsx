@@ -5,9 +5,9 @@ import { useApi } from "@/hooks";
 import { PRODUCTS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierProps } from "@/utils/types";
-import { LinearProgress, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaRegEdit } from "react-icons/fa";
@@ -15,12 +15,8 @@ import { FaRegEdit } from "react-icons/fa";
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const [showEdit, setShowEdit] = useState(false);
   const { get } = useApi();
   const [tableData, setTableData] = useState<null | supplierProps[]>(null);
-  console.log({ tableData });
   useEffect(() => {
     get({ url: PRODUCTS.getAllDetails }).then((res) => {
       console.log("PRODUCTS.getAllDetails", {
@@ -36,7 +32,7 @@ export default function Home() {
         alert("Error " + res.status + ": " + res.data);
       }
     });
-  }, [id]);
+  }, []);
 
   const columns: GridColDef[] =
     !tableData || tableData?.length <= 0
