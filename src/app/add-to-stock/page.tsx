@@ -81,7 +81,7 @@ export default function Home() {
           if (res?.farmsID) {
             setValues({ ...values, ...res });
           }
-        }
+        },
       );
     }
     get({ url: SUPPLIERS.getAll }).then((res) => {
@@ -119,7 +119,7 @@ export default function Home() {
   };
   const handleSelectChange = (
     name: string,
-    value: null | (productProps & supplierProps)
+    value: null | (productProps & supplierProps),
   ) => {
     setValues({
       ...values,
@@ -170,7 +170,7 @@ export default function Home() {
 
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
   const handleSubmit = () => {
     if (isValid()) {
@@ -188,7 +188,7 @@ export default function Home() {
           console.log("SUPPLIERS.addRecord: ", { res });
           if (res.farmRecordID) {
             router.push(
-              pathname + "?" + createQueryString("id", res.farmRecordID)
+              pathname + "?" + createQueryString("id", res.farmRecordID),
             );
           }
           setIsLoad(false);
@@ -205,7 +205,7 @@ export default function Home() {
           console.log("SUPPLIERS.addRecord: ", { res });
           if (res.farmRecordID) {
             router.push(
-              pathname + "?" + createQueryString("id", res.farmRecordID)
+              pathname + "?" + createQueryString("id", res.farmRecordID),
             );
           }
           setIsLoad(false);
@@ -215,15 +215,15 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col p-4">
-      <div className="bg-white p-4 border rounded-lg flex flex-col mb-4">
-        <h4 className="mb-4 col-span-1">
+      <div className="mb-4 flex flex-col rounded-lg border bg-white p-4">
+        <h4 className="col-span-1 mb-4">
           {id ? t("AddToStock.editProduct") : t("AddToStock.addProduct")}
         </h4>
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 gap-4 md:grid-cols-3"
         >
-          <div className="md:col-span-3 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
+          <div className="col-span-1 flex flex-row items-center justify-between gap-2 rounded-md border ltr:pr-1 rtl:pl-1 md:col-span-3">
             <Autocomplete
               className="flex-1"
               clearOnEscape
@@ -250,7 +250,7 @@ export default function Home() {
             />
             <AddFarm showButtonTitle />
           </div>
-          <div className="md:col-span-2 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
+          <div className="col-span-1 flex flex-row items-center justify-between gap-2 rounded-md border ltr:pr-1 rtl:pl-1 md:col-span-2">
             <Autocomplete
               className="flex-1"
               clearOnEscape
@@ -390,14 +390,14 @@ export default function Home() {
           </FormControl>
           {/* <div className="col-span-2 md:flex hidden"></div> */}
           {isLoad ? (
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               <CircularProgress />
             </div>
           ) : (
             <>
               <CustomButton
                 variant="contained"
-                color={id? "secondary": "primary"}
+                color={id ? "secondary" : "primary"}
                 onClick={handleSubmit}
               >
                 {id ? t("common.edit") : t("common.save")}

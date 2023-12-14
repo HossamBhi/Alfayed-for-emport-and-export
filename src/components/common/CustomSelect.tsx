@@ -34,7 +34,10 @@ const CustomSelect = ({
         {...props}
       >
         {items.map((item, i) => (
-          <MenuItem key={item.value || item.id ||  i} value={item.value || item.id}>
+          <MenuItem
+            key={item.value || item.id || i}
+            value={item.value || item.id}
+          >
             {item.label || item.name}
           </MenuItem>
         ))}

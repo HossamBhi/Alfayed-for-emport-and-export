@@ -19,7 +19,9 @@ export const en = {
       "addToStock": "Add To Stock",
       "stock": "Stock",
       "accounts": "Accounts",
-      "addSupplier": "Add Supplier"
+      "addSupplier": "Add Supplier",
+      "products": "Products",
+      "homepage": "Home",
     },
     "AddFarm": {
       "addFarm": "Add Supplier",
@@ -122,7 +124,10 @@ export const en = {
       "paied": "Paied",
       "productName": "Product Name",
       "expenseRecordID": "ID",
-      "actions": "Actions"
+      "actions": "Actions",
+      "farmsNotes": "Note",
+      "farmsName": "farm Name",
+      "farmRecordID": "#",
     },
     "supplierTable": {
       "farmsName": "farm Name",

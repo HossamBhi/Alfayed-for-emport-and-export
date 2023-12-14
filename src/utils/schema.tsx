@@ -23,7 +23,7 @@ export const lightTheme = createTheme(
 
     direction: i18n.dir(),
   },
-  arSD
+  arSD,
 );
 
 export const darkTheme = createTheme({

@@ -18,7 +18,16 @@ export const ar = {
       "addToStock": "أضف إلى المخزون",
       "stock": "مخزون",
       "accounts": "حسابات",
-      "addSupplier": "إضافة مورد"
+      "addSupplier": "إضافة مورد",
+      "products": "المنتجات",
+      "homepage": "الصفحة الرئيسية",
+    },
+    "dashboard": {
+      "total": "اجمالي الخزنة",
+      "products": "منتجات",
+      "clients": "العملاء",
+      "fridge": "ثلاجة",
+      "expenses": "المصروفات",
     },
     "AddFarm": {
       "addFarm": "أضف المورد",
@@ -39,13 +48,6 @@ export const ar = {
       "clients": "العملاء",
       "addClient": "إضافة عميل",
       "clientName": "اسم العميل",
-    },
-    "dashboard": {
-      "total": "اجمالي الخزنة",
-      "products": "منتجات",
-      "clients": "العملاء",
-      "fridge": "ثلاجة",
-      "expenses": "المصروفات",
     },
     "AddToStock": {
       "name": "اسم المورد",
@@ -122,7 +124,10 @@ export const ar = {
       "paied": "مدفوع",
       "productName": "اسم المنتج",
       "expenseRecordID": "#",
-      "actions": "الأوامر"
+      "actions": "الأوامر",
+      "farmsNotes": "ملحوظة",
+      "farmsName": "اسم المورد",
+      "farmRecordID": "#",
     },
     "supplierTable": {
       "farmsName": "اسم المورد",

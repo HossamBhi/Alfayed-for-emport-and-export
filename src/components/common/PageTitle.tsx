@@ -8,7 +8,7 @@ interface PageTitleProps {
 
 const PageTitle = ({ title, children, className }: PageTitleProps) => {
   return (
-    <h4 className={`text-black text-sm md:text-lg ${className}`}>
+    <h4 className={`text-sm text-black md:text-lg ${className}`}>
       {title}
       {children}
     </h4>

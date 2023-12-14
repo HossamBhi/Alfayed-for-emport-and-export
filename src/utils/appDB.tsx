@@ -1,9 +1,9 @@
-import {t} from 'i18next';
+import { t } from "i18next";
 
 export const _getAppThemes = () => [
-  {id: 1, name: t('defaultTheme')},
-  {id: 2, name: t('darkTheme')},
-  {id: 3, name: t('lightTheme')},
+  { id: 1, name: t("defaultTheme") },
+  { id: 2, name: t("darkTheme") },
+  { id: 3, name: t("lightTheme") },
 ];
 
 export type ThemeProps = {
@@ -20,4 +20,4 @@ export const _getAppLanguages = () => [
 export const DISCOUNT_TYPES = () => [
   { id: 1, name: t("AddToStock.discountPercentage") },
   { id: 2, name: t("AddToStock.discountFlat") },
-]
+];

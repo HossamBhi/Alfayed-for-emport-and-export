@@ -1,19 +1,16 @@
 "use client";
-import { UserCard } from "@/components/cards";
 import { CustomTable } from "@/components/common";
-import { AddFarm } from "@/components/popups";
+import { AddPropduct } from "@/components/popups";
 import { useApi } from "@/hooks";
-import { DISCOUNT_TYPES } from "@/utils/appDB";
-import { SUPPLIERS } from "@/utils/endpoints";
+import { PRODUCTS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
-import { supplierDataProps, supplierProps } from "@/utils/types";
+import { supplierProps } from "@/utils/types";
 import { LinearProgress, Tooltip } from "@mui/material";
 import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaRegEdit } from "react-icons/fa";
-import { GiFarmer } from "react-icons/gi";
 
 export default function Home() {
   const router = useRouter();
@@ -21,40 +18,30 @@ export default function Home() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [showEdit, setShowEdit] = useState(false);
-  // const [id, setId] = useState<null | string>(null);
   const { get } = useApi();
-  const [supplier, setSupplier] = useState<null | supplierProps>(null);
-  const [supplierData, setSupplierData] = useState<null | supplierDataProps[]>(
-    null,
-  );
-
+  const [tableData, setTableData] = useState<null | supplierProps[]>(null);
+  console.log({ tableData });
   useEffect(() => {
-    // const searchQuiry = new URLSearchParams(window.location.search);
-    // const ID = searchQuiry.get("id");
-    if (id != null) {
-      // setId(ID);
-      get({ url: SUPPLIERS.getRecordWithData, params: { recordId: id } }).then(
-        (res) => {
-          console.log("farm data get Record With Data", { res });
-          // if (Array.isArray(res)) {
-          if (!res.status) {
-            setSupplier(res);
-            setSupplierData(res.farmRecords);
-          } else {
-            setSupplierData([]);
-            alert("Error " + res.status + ": " + res.data);
-          }
-        },
-      );
-    }
+    get({ url: PRODUCTS.getAllDetails }).then((res) => {
+      console.log("PRODUCTS.getAllDetails", {
+        res,
+        s: !res.status,
+        t: !res.status || Array.isArray(res),
+      });
+      // if (Array.isArray(res)) {
+      if (!res.status || Array.isArray(res)) {
+        setTableData(res);
+      } else {
+        setTableData([]);
+        alert("Error " + res.status + ": " + res.data);
+      }
+    });
   }, [id]);
 
   const columns: GridColDef[] =
-    !supplierData || supplierData?.length <= 0
+    !tableData || tableData?.length <= 0
       ? []
-      : createDataColumns(supplierData[0], (s: string) =>
-          t("supplierTable." + s),
-        );
+      : createDataColumns(tableData[0], (s: string) => t("table." + s));
 
   const customeColumns = useMemo(() => {
     if (columns?.length <= 0) {
@@ -118,42 +105,33 @@ export default function Home() {
     ];
   }, [columns]);
 
-  if (id === null || !supplier || !supplierData) {
-    return (
-      <main className="flex min-h-screen flex-col">
-        <LinearProgress
-          sx={{ minWidth: "100%" }}
-          className="absolute top-0 rounded"
-        />
-      </main>
-    );
-  }
+  // if (!tableData) {
+  //   return (
+  //     <main className="flex min-h-screen flex-col">
+  //       <LinearProgress
+  //         sx={{ minWidth: "100%" }}
+  //         className="absolute top-0 rounded"
+  //       />
+  //     </main>
+  //   );
+  // }
 
   return (
-    <main className="flex min-h-screen flex-col p-4">
-      <div className="m-0">
-        {id != null && (
-          <UserCard
-            item={supplier}
-            containerStyle={"bg-white hover:bg-white mt-0"}
-            showEdit
-            Icon={GiFarmer}
-            onEdit={() => setShowEdit(true)}
-            onClick={() => setShowEdit(true)}
-          />
-        )}
-        <AddFarm
+    <main className="flex min-h-screen flex-col p-4 md:p-2">
+      <div className="mb-4">
+        <AddPropduct showButtonTitle />
+        {/* <AddFarm
           hideShowBtn={true}
           editData={supplier}
           setEditData={(data) => setSupplier(data)}
           show={showEdit}
           onClose={() => setShowEdit(false)}
-        />
+        /> */}
       </div>
 
       <div className="grid grid-cols-1">
         <CustomTable
-          rows={supplierData || []}
+          rows={tableData || []}
           columns={customeColumns as any}
           getRowId={(item) => item.farmRecordID}
         />

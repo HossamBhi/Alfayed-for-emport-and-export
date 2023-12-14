@@ -21,7 +21,7 @@ export default function Home() {
   const { get } = useApi();
   const [supplier, setSupplier] = useState<null | supplierProps>(null);
   const [supplierData, setSupplierData] = useState<null | supplierDataProps[]>(
-    null
+    null,
   );
   useEffect(() => {
     // const searchQuiry = new URLSearchParams(window.location.search);
@@ -54,7 +54,7 @@ export default function Home() {
           col.field !== "farmRecordID" &&
           col.field !== "productID" &&
           col.field !== "created_Date" &&
-          col.field !== "expenseID"
+          col.field !== "expenseID",
       )
       .map((col) =>
         col.field === "expenseDate"
@@ -67,8 +67,8 @@ export default function Home() {
               headerAlign: "center",
             }
           : col.field === "expenseRecordNotes"
-          ? { ...col, width: 200, renderCell: renderCellExpand }
-          : col
+            ? { ...col, width: 200, renderCell: renderCellExpand }
+            : col,
       );
   }, [columns]);
 

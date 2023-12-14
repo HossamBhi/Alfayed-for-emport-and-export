@@ -91,15 +91,9 @@ const App = ({ children }: { children: ReactNode }) => {
               {/* <div className="z-20"> */}
               <SideMenu isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu} />
               {/* </div> */}
-              <div
-                className={`bg-gray-100 w-full`}
-                // className={`bg-gray-100 ${
-                //   i18n.dir() === "rtl" ? "mr-20" : "ml-20"
-                // }`}
-              >
+              <div className={`w-full bg-gray-100`}>
                 {isLoad && (
                   <div className="w-full rounded">
-                    {/* <div className="absolute top-0 w-full rounded"> */}
                     <LinearProgress className="rounded" />
                   </div>
                 )}

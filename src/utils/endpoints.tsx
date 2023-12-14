@@ -45,6 +45,7 @@ export const PRODUCTS = {
   getAll: "GetAllProducts",
   add: "AddNewProduct",
   update: "UpdateProduct",
+  getAllDetails: "AllProductsDetails",
 };
 
 export const STORE = {

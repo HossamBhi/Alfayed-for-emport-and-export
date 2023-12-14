@@ -31,17 +31,17 @@ const CardsContainer = ({
           item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
           item?.expenseTypeName
             ?.toLowerCase()
-            .includes(searchValue?.toLowerCase())
+            .includes(searchValue?.toLowerCase()),
       ),
-    [searchValue, items]
+    [searchValue, items],
   );
   return (
-    <div className="w-full col-span-1 relative m-auto bg-white border rounded-lg p-4">
-      <h2 className="flex justify-between items-center pb-4">
+    <div className="relative col-span-1 m-auto w-full rounded-lg border bg-white p-4">
+      <h2 className="flex items-center justify-between pb-4">
         <div className="flex items-center">
           <p>{title}</p>
           <Box
-            className="p-1 rounded-sm mx-2 text-xs"
+            className="mx-2 rounded-sm p-1 text-xs"
             sx={{ backgroundColor: primary.main + "30" }}
           >
             {filteredData?.length}
@@ -65,9 +65,9 @@ const CardsContainer = ({
         fullWidth
         variant="standard"
       />
-      <div className="overflow-scroll flex flex-col relative lg:h-[70vh] h-[50vh]">
+      <div className="relative flex h-[50vh] flex-col overflow-scroll lg:h-[70vh]">
         {isLoading ? (
-          <div className="w-full h-full flex justify-center items-center">
+          <div className="flex h-full w-full items-center justify-center">
             <CircularProgress />
           </div>
         ) : (

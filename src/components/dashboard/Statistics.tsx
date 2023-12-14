@@ -17,21 +17,23 @@ const Statistics = () => {
   const StatisticCard = useCallback(
     ({ price, Icon, label, color }: StatisticCardProps) => {
       return (
-        <div className="rounded-lg bg-white p-4 flex justify-between items-center">
-          <div className="flex flex-col w-full">
-            <p className={`text-2xl font-bold text-${color}-600 pb-2`}>{price}</p>
+        <div className="flex items-center justify-between rounded-lg bg-white p-4">
+          <div className="flex w-full flex-col">
+            <p className={`text-2xl font-bold text-${color}-600 pb-2`}>
+              {price}
+            </p>
             <p className="text-xl text-gray-600">{label}</p>
           </div>
-          <div className={`bg-${color}-200 text-${color}-600 p-4 rounded-lg`}>
+          <div className={`bg-${color}-200 text-${color}-600 rounded-lg p-4`}>
             <Icon size="30" />
           </div>
         </div>
       );
     },
-    []
+    [],
   );
   return (
-    <div className="md:p-4 p-2 grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 gap-4 p-2 md:p-4 lg:grid-cols-4">
       <StatisticCard
         price={100000}
         label={t("dashboard.total")}
@@ -50,7 +52,7 @@ const Statistics = () => {
         Icon={FaBoxesStacked}
         color="purple"
       />
-       <StatisticCard
+      <StatisticCard
         price={5}
         label={t("dashboard.fridge")}
         Icon={RiFridgeFill}

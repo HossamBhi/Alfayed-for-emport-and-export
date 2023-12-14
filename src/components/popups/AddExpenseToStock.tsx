@@ -62,7 +62,7 @@ const AddExpenseToStock = ({
           paied: 0,
           remaining: 0,
           expenseRecordNotes: "",
-        }
+        },
   );
   useEffect(() => {
     if (editData) {
@@ -132,8 +132,8 @@ const AddExpenseToStock = ({
             // let newData =
             setExpensesData(
               expensesData.map((item: any) =>
-                item?.expenseRecordID === res?.expenseRecordID ? res : item
-              )
+                item?.expenseRecordID === res?.expenseRecordID ? res : item,
+              ),
             );
           }
         })

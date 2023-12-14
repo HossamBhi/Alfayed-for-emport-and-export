@@ -5,13 +5,15 @@ import CustomSelect from "./CustomSelect";
 import CustomTable from "./CustomTable";
 import PageTitle from "./PageTitle";
 import renderCellExpand from "./GridCellExpand";
+import Sidebar from "./Sidebar";
 
 export {
+  Sidebar,
   CustomDialog,
   CustomInput,
   CustomButton,
   CustomSelect,
   CustomTable,
   PageTitle,
-  renderCellExpand
+  renderCellExpand,
 };

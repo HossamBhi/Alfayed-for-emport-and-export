@@ -49,7 +49,7 @@ const ExpenseForm = ({
   };
   const handleSelectChange = (
     name: string,
-    value: null | (productProps & supplierProps)
+    value: null | (productProps & supplierProps),
   ) => {
     setValues({
       ...values,
@@ -75,9 +75,9 @@ const ExpenseForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      className="grid grid-cols-1 gap-4 md:grid-cols-3"
     >
-      <div className="md:col-span-3 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
+      <div className="col-span-1 flex flex-row items-center justify-between gap-2 rounded-md border ltr:pr-1 rtl:pl-1 md:col-span-3">
         <Autocomplete
           className="flex-1"
           clearOnEscape
@@ -143,7 +143,7 @@ const ExpenseForm = ({
           type="number"
         />
       </FormControl>
-      <FormControl className="md:col-span-2 col-span-1">
+      <FormControl className="col-span-1 md:col-span-2">
         <CustomInput
           id="additionalNotes"
           label={t("AddToStock.additionalNotes")}
@@ -181,7 +181,7 @@ const ExpenseForm = ({
           type="date"
         />
       </FormControl>
-      <FormControl className="md:col-span-3 col-span-1">
+      <FormControl className="col-span-1 md:col-span-3">
         <CustomInput
           id="expenseRecordNotes"
           label={t("AddToStock.note")}

@@ -63,7 +63,7 @@ const AddExpensesCategory = ({
           } else {
             dispatch(addExpenseTypeAction(res));
           }
-        }
+        },
       );
 
       setName("");

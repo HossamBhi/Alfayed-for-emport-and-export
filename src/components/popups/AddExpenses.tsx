@@ -47,7 +47,7 @@ const AddExpenses = ({
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [name, setName] = useState(editData?.name ? editData?.name : "");
   const [expenseType, setExpenseType] = useState(
-    editData?.type ? editData?.type : ""
+    editData?.type ? editData?.type : "",
   );
   const [errors, setErrors] = useState({ name: false, type: false });
   const dispatch = useDispatch();
@@ -138,7 +138,7 @@ const AddExpenses = ({
             />
           </FormControl>
 
-          <div className="md:col-span-2 col-span-1 flex flex-row justify-between gap-2 border rounded-md items-center ltr:pr-1 rtl:pl-1">
+          <div className="col-span-1 flex flex-row items-center justify-between gap-2 rounded-md border ltr:pr-1 rtl:pl-1 md:col-span-2">
             <Autocomplete
               className="flex-1"
               clearOnEscape

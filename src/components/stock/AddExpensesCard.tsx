@@ -35,7 +35,7 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
           } else {
             setExpensesData(res);
           }
-        }
+        },
       );
     }
   }, [id]);
@@ -53,7 +53,7 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
             col.field !== "expenseID" &&
             col.field !== "farmRecordID" &&
             col.field !== "created_Date" &&
-            col.field !== "expenseID"
+            col.field !== "expenseID",
           // col.field !== "expenseRecordID"
         )
         .map((col) =>
@@ -67,12 +67,12 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
                 headerAlign: "center",
               }
             : col.field === "expenseRecordNotes"
-            ? { ...col, width: 150 }
-            : col.field === "expenseName"
-            ? { ...col, width: 150 }
-            : col.field === "additionalNotes"
-            ? { ...col, width: 150 }
-            : col
+              ? { ...col, width: 150 }
+              : col.field === "expenseName"
+                ? { ...col, width: 150 }
+                : col.field === "additionalNotes"
+                  ? { ...col, width: 150 }
+                  : col,
         ),
       {
         field: "actions",
@@ -101,7 +101,7 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
   return (
     <div>
       <PageTitle
-        className={`mb-4 col-span-1 flex justify-between items-center`}
+        className={`col-span-1 mb-4 flex items-center justify-between`}
         title={t("AddToStock.expenses")}
       >
         <AddExpenseToStock

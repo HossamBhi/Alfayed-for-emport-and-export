@@ -17,7 +17,7 @@ const Farmcard = ({ item, containerStyle }: FarmcardProps) => {
   const { t } = useTranslation();
   return (
     <div
-      className={`flex hover:bg-gray-100 flex-1 justify-center items-center my-3 bg-gray-50 rounded-lg p-4 cursor-pointer ${containerStyle}`}
+      className={`my-3 flex flex-1 cursor-pointer items-center justify-center rounded-lg bg-gray-50 p-4 hover:bg-gray-100 ${containerStyle}`}
       onClick={() => router.push("farm-details?id=" + item.id)}
     >
       <Box
@@ -32,8 +32,8 @@ const Farmcard = ({ item, containerStyle }: FarmcardProps) => {
       </div>
 
       <div className="">
-        <p className="text-gray-400 text-sm">{t("common.total")}</p>
-        <p className="font-bold text-lg">{item.total}</p>
+        <p className="text-sm text-gray-400">{t("common.total")}</p>
+        <p className="text-lg font-bold">{item.total}</p>
 
         {/* <p>{item.date}</p> */}
       </div>

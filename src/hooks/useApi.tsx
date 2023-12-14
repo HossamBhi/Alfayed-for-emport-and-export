@@ -18,7 +18,7 @@ type requestProps = {
 export default () => {
   const logedUser = useSelector(
     (state: RootState) => state.user || { token: "" },
-    shallowEqual
+    shallowEqual,
   );
   const token = logedUser?.token;
   const dispatch = useDispatch();

@@ -25,19 +25,23 @@ const PageHeader = ({
 
   return (
     <div
-      className={`flex flex-1  md:py-2 md:px-4 px-2 md:bg-transparent bg-white items-center pt-2 py-2 ${
-        title ? "justify-between" : "justify-end"
+      className={`flex min-h-[48px] flex-1 items-center bg-white px-4 py-2 md:bg-transparent md:px-4 ${
+        title
+          ? "justify-between"
+          : isShowMenu
+            ? "justify-end"
+            : "justify-between"
       }`}
     >
-      {/* <AppLogo className="mb-0" /> */}
+      {!isShowMenu && <AppLogo className="!mb-0 me-4 !inline md:!hidden" />}
       {title && (
-        <h2 className="text-black text-sm md:text-lg flex-1">
+        <h2 className="flex-1 text-sm text-black md:text-lg">
           {t(`menu.${title}`)}
         </h2>
       )}
       {isShowMenu ? (
         <IoClose
-          className={"cursor-pointer self-end md:hidden inline"}
+          className={"inline cursor-pointer md:hidden"}
           size={24}
           onClick={() => {
             setIsShowMenu(!isShowMenu);
@@ -45,7 +49,7 @@ const PageHeader = ({
         />
       ) : (
         <IoMenu
-          className={"cursor-pointer self-end md:hidden inline"}
+          className={"inline cursor-pointer md:hidden"}
           size={24}
           onClick={() => {
             setIsShowMenu(!isShowMenu);

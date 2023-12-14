@@ -29,17 +29,17 @@ const UserCard = ({
   const { t } = useTranslation();
   return (
     <div
-      className={`flex relative hover:bg-gray-100 flex-1 justify-center items-center my-3 bg-gray-50 rounded-lg p-4 cursor-pointer ${containerStyle}`}
+      className={`relative my-3 flex flex-1 cursor-pointer items-center justify-center rounded-lg bg-gray-50 p-4 hover:bg-gray-100 ${containerStyle}`}
       onClick={() => onClick && onClick(item)}
     >
       <Box
-        className="rounded-lg p-2 relative"
+        className="relative rounded-lg p-2"
         sx={{ backgroundColor: primary.main + "50" }}
       >
         {showEdit && (
           <Box
             onClick={() => onEdit && onEdit(item)}
-            className="absolute top-[-10px] right-[-10px] rounded-full p-1 z-10 cursor-pointer"
+            className="absolute right-[-10px] top-[-10px] z-10 cursor-pointer rounded-full p-1"
             sx={{
               backgroundColor: primary.main,
               borderWidth: 2,
@@ -70,8 +70,8 @@ const UserCard = ({
       </div>
 
       <div className="text-center">
-        <p className="text-gray-400 text-sm">{t("common.total")}</p>
-        <p className="font-bold text-lg">{item.total || 0}</p>
+        <p className="text-sm text-gray-400">{t("common.total")}</p>
+        <p className="text-lg font-bold">{item.total || 0}</p>
       </div>
     </div>
   );

@@ -1,9 +1,22 @@
-import { TFunction } from "i18next";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { BsInboxes, BsInboxesFill } from "react-icons/bs";
+import { GiFruitTree } from "react-icons/gi";
 import { MdAddCircle, MdAddCircleOutline } from "react-icons/md";
 import { RiBankFill, RiBankLine } from "react-icons/ri";
 
 export const SIDEMENU_LINKS = [
+  {
+    title: "homepage",
+    url: "/",
+    InActiveIcon: AiOutlineHome,
+    ActiveIcon: AiFillHome,
+  },
+  {
+    title: "products",
+    url: "/products",
+    InActiveIcon: GiFruitTree,
+    ActiveIcon: GiFruitTree,
+  },
   {
     title: "addToStock",
     url: "/add-to-stock",
@@ -16,6 +29,7 @@ export const SIDEMENU_LINKS = [
     InActiveIcon: BsInboxes,
     ActiveIcon: BsInboxesFill,
   },
+
   {
     title: "accounts",
     url: "/accounts",
@@ -26,7 +40,7 @@ export const SIDEMENU_LINKS = [
 
 export const createDataColumns = (
   data: { [key: string]: any },
-  t: (s: string) => void
+  t: (s: string) => void,
 ): {
   field: string;
   headerName: string;

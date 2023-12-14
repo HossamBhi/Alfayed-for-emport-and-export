@@ -38,7 +38,7 @@
       --background-start-rgb: 0, 0, 0;
       --background-end-rgb: 0, 0, 0;
       --color-primary: 23, 105, 170;
-      --color-text: 0 , 0 , 0;
+      --color-text: 0, 0, 0;
       --color-on-primary: 71, 12, 122;
       --color-primary-container: 95, 43, 146;
       --color-on-primary-container: 240, 219, 255;
@@ -62,7 +62,7 @@
   }
 }
 body {
-  color: rgb(var(--color-text))
+  color: rgb(var(--color-text));
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -73,10 +73,10 @@ body {
 }
 
 .custom-input-container {
-  @apply w-full p-4 bg-white rounded-lg flex items-center h-[48px];
+  @apply flex h-[48px] w-full items-center rounded-lg bg-white p-4;
 }
 .custom-input {
-  @apply w-full ml-2 pl-4 outline-none cursor-pointer text-sm;
+  @apply ml-2 w-full cursor-pointer pl-4 text-sm outline-none;
 }
 
 .login-background {

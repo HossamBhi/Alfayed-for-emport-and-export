@@ -2,7 +2,7 @@
 import { DataGrid, DataGridProps, GridToolbar } from "@mui/x-data-grid";
 
 const CustomTable = ({ rows, ...props }: DataGridProps) => (
-  <div className="w-full relative overflow-y-auto m-0 bg-white ">
+  <div className="relative m-0 w-full overflow-y-auto bg-white ">
     <div style={{ width: "100%" }} className="h-[80vh]">
       <DataGrid
         rows={rows}

@@ -18,7 +18,7 @@ function isOverflown(element: Element): boolean {
 }
 
 const GridCellExpand = React.memo(function GridCellExpand(
-  props: GridCellExpandProps
+  props: GridCellExpandProps,
 ) {
   const { width, value } = props;
   const wrapper = React.useRef<HTMLDivElement | null>(null);

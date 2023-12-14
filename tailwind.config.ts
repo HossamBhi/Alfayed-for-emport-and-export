@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 // const colors = require('tailwindcss/colors')
-import colors from 'tailwindcss/colors';
+import colors from "tailwindcss/colors";
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,7 +14,6 @@ module.exports = {
         inter: ["Inter", "sans-serif"],
       },
       colors: {
-        
         "black-100": "#2B2C35",
         primary: {
           DEFAULT: "rgb(var(--color-primary))",
@@ -47,7 +46,8 @@ module.exports = {
         /(bg|text|border)-(transparent|current|blue|white|purple|green|midnight|metal|tahiti|silver|bermuda)/,
     },
     {
-      pattern: /(bg|text|border)-(tahiti)-(100|200|300|400|500|600|700|800|900)/,
+      pattern:
+        /(bg|text|border)-(tahiti)-(100|200|300|400|500|600|700|800|900)/,
     },
   ],
 };
