@@ -84,6 +84,7 @@ const SideMenu = ({
                     //     ? "bg-blue-200 hover:bg-blue-100"
                     //     : "text-black"
                     // }`}
+                    onClick={() => setIsShowMenu(false)}
                     className={`group flex items-center rounded-lg bg-gray-200 p-2 text-gray-900 hover:bg-gray-100    ${
                       pathname === url
                         ? "!bg-blue-400 text-white hover:bg-blue-100"

@@ -50,6 +50,9 @@ const AddExpenses = ({
   const [expenseType, setExpenseType] = useState(
     editData?.type ? editData?.type : "",
   );
+  const [expenseTypeName, setExpenseTypeName] = useState(
+    editData?.expenseTypeName ?? "",
+  );
   const [errors, setErrors] = useState({ name: false, type: false });
   const dispatch = useDispatch();
   const handleOnCloseAddProduct = () => {
@@ -57,10 +60,16 @@ const AddExpenses = ({
   };
 
   useEffect(() => {
-    setName(editData?.name ? editData?.name : "");
-    setExpenseType(editData?.type ? editData?.type : "");
+    setName(editData?.name ?? "");
+    setExpenseType(editData?.type ?? "");
+    setExpenseTypeName(editData?.expenseTypeName ?? "");
   }, [editData]);
-
+  console.log({
+    expensesTypes,
+    expenseType,
+    editData,
+    s: expensesTypes.find((item) => item.id == expenseType),
+  });
   const callAPI = () => {
     if (!isNotEmpty(name)) {
       return setErrors({ ...errors, name: true });
@@ -155,6 +164,8 @@ const AddExpenses = ({
               options={expensesTypes}
               getOptionLabel={(item) => item.name}
               id="type"
+              // TODO: Change it to id
+              value={expensesTypes.find((item) => item.name == expenseTypeName)}
               onChange={(e, value) => {
                 if (!value?.id) {
                   setErrors({ ...errors, type: true });
@@ -176,10 +187,10 @@ const AddExpenses = ({
           </div>
         </DialogContent>
         <DialogActions>
-          <CustomButton variant="contained" onClick={handleOnCloseAddProduct}>
+          <CustomButton onClick={handleOnCloseAddProduct}>
             {t("common.close")}
           </CustomButton>
-          <CustomButton onClick={callAPI}>
+          <CustomButton variant="contained" onClick={callAPI}>
             {editData ? t("common.edit") : t("common.save")}
           </CustomButton>
         </DialogActions>
