@@ -1,15 +1,18 @@
 "use client";
 import { CustomTable } from "@/components/common";
 import { AddFarm } from "@/components/popups";
-import { useApi } from "@/hooks";
 import { RootState } from "@/redux/store";
-import { SUPPLIERS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierProps } from "@/utils/types";
 import { Tooltip } from "@mui/material";
-import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import {
+  GridActionsCellItem,
+  GridColDef,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaEye, FaRegEdit } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -55,11 +58,14 @@ export default function Home() {
         col.field === "date"
           ? {
               ...col,
-              valueFormatter: ({ value }: any) => value ?? formatDate(value),
               width: 150,
               type: "date",
               align: "center",
               headerAlign: "center",
+              valueFormatter: (params: GridValueFormatterParams) =>
+                formatDate(params.value),
+              valueGetter: (params: GridValueGetterParams) =>
+                formatDate(params.value),
             }
           : col.field === "name"
             ? { ...col, width: 200 }

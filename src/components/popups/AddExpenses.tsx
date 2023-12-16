@@ -64,12 +64,7 @@ const AddExpenses = ({
     setExpenseType(editData?.type ?? "");
     setExpenseTypeName(editData?.expenseTypeName ?? "");
   }, [editData]);
-  console.log({
-    expensesTypes,
-    expenseType,
-    editData,
-    s: expensesTypes.find((item) => item.id == expenseType),
-  });
+  
   const callAPI = () => {
     if (!isNotEmpty(name)) {
       return setErrors({ ...errors, name: true });

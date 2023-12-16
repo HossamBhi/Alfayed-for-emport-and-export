@@ -2,18 +2,20 @@
 import { CustomTable, PageTitle } from "@/components/common";
 import { AddExpenseToStock } from "@/components/popups";
 import { useApi } from "@/hooks";
-// import { PRODUCTS } from "@/data";
-import { RootState } from "@/redux/store";
 import { EXPENSES } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { expenseProps } from "@/utils/types";
 import { Tooltip } from "@mui/material";
-import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import {
+  GridActionsCellItem,
+  GridColDef,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaRegEdit } from "react-icons/fa";
-import { useSelector } from "react-redux";
 
 const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
   // const expenses = useSelector((state: RootState) => state.expenses.expenses);
@@ -60,11 +62,14 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
           col.field === "expenseDate"
             ? {
                 ...col,
-                valueFormatter: (params: any) => formatDate(params.value),
                 width: 150,
                 type: "date",
                 align: "center",
                 headerAlign: "center",
+                valueFormatter: (params: GridValueFormatterParams) =>
+                  formatDate(params.value),
+                valueGetter: (params: GridValueGetterParams) =>
+                  formatDate(params.value),
               }
             : col.field === "expenseRecordNotes"
               ? { ...col, width: 150 }
@@ -79,7 +84,7 @@ const AddExpensesCard = ({ farmId }: { farmId: null | number | string }) => {
         headerName: t("table.actions"),
         width: 150,
         type: "actions",
-        getActions: (params: any) => {
+        getActions: (params: GridValueGetterParams) => {
           const { row, id } = params;
           return [
             <Tooltip key={id} title={t("common.edit")}>

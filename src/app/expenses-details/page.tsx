@@ -6,8 +6,11 @@ import { useApi } from "@/hooks";
 import { EXPENSES } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
-import { LinearProgress } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import {
+  GridColDef,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -60,11 +63,14 @@ export default function Home() {
         col.field === "expenseDate"
           ? {
               ...col,
-              valueFormatter: (params: any) => formatDate(params.value),
               width: 150,
               type: "date",
               align: "center",
               headerAlign: "center",
+              valueGetter: (params: GridValueGetterParams) =>
+                formatDate(params.value),
+              valueFormatter: (params: GridValueFormatterParams) =>
+                formatDate(params.value),
             }
           : col.field === "expenseRecordNotes"
             ? { ...col, width: 200, renderCell: renderCellExpand }

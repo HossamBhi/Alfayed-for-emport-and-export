@@ -6,7 +6,12 @@ import { PRODUCTS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierProps } from "@/utils/types";
 import { Tooltip } from "@mui/material";
-import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import {
+  GridActionsCellItem,
+  GridColDef,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -56,11 +61,14 @@ export default function Home() {
           col.field === "supplyDate"
             ? {
                 ...col,
-                valueFormatter: (params: any) => formatDate(params.value),
                 width: 150,
                 type: "date",
                 align: "center",
                 headerAlign: "center",
+                valueFormatter: (params: GridValueFormatterParams) =>
+                  formatDate(params.value),
+                valueGetter: (params: GridValueGetterParams) =>
+                  formatDate(params.value),
               }
             : col.field === "farmsNotes"
               ? { ...col, width: 200 }

@@ -3,12 +3,16 @@ import { UserCard } from "@/components/cards";
 import { CustomTable } from "@/components/common";
 import { AddFarm } from "@/components/popups";
 import { useApi } from "@/hooks";
-import { DISCOUNT_TYPES } from "@/utils/appDB";
 import { SUPPLIERS } from "@/utils/endpoints";
 import { createDataColumns, formatDate } from "@/utils/helper";
 import { supplierDataProps, supplierProps } from "@/utils/types";
-import { LinearProgress, Tooltip } from "@mui/material";
-import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import { Tooltip } from "@mui/material";
+import {
+  GridActionsCellItem,
+  GridColDef,
+  GridValueFormatterParams,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -73,11 +77,14 @@ export default function Home() {
           col.field === "supplyDate"
             ? {
                 ...col,
-                valueFormatter: (params: any) => formatDate(params.value),
                 width: 150,
                 type: "date",
                 align: "center",
                 headerAlign: "center",
+                valueFormatter: (params: GridValueFormatterParams) =>
+                  formatDate(params.value),
+                valueGetter: (params: GridValueGetterParams) =>
+                  formatDate(params.value),
               }
             : col.field === "farmsNotes"
               ? { ...col, width: 200 }
