@@ -90,7 +90,6 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-2">
       <div className="mb-4">
-        {/* <AddFarm showButtonTitle /> */}
         <AddClient
           showButtonTitle
           editData={editData}

@@ -77,8 +77,8 @@ export default function Home() {
                     ...col,
                     width: 120,
                     headerName: t("AddToStock.discountType"),
-                    valueGetter: (params: any) => {
-                      if (params.value === 1) {
+                    valueGetter: (params: GridValueGetterParams) => {
+                      if (params.value === true) {
                         return t("AddToStock.discountPercentage");
                       }
                       return t("AddToStock.discountFlat");

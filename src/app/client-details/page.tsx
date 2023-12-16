@@ -25,7 +25,6 @@ export default function Home() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [showEdit, setShowEdit] = useState(false);
-  // const [id, setId] = useState<null | string>(null);
   const { get } = useApi();
   const [supplier, setSupplier] = useState<null | supplierProps>(null);
   const [supplierData, setSupplierData] = useState<null | supplierDataProps[]>(
@@ -33,10 +32,7 @@ export default function Home() {
   );
 
   useEffect(() => {
-    // const searchQuiry = new URLSearchParams(window.location.search);
-    // const ID = searchQuiry.get("id");
     if (id != null) {
-      // setId(ID);
       get({ url: SUPPLIERS.getRecordWithData, params: { recordId: id } }).then(
         (res) => {
           console.log("farm data get Record With Data", { res });
@@ -94,7 +90,7 @@ export default function Home() {
                     width: 120,
                     headerName: t("AddToStock.discountType"),
                     valueGetter: (params: any) => {
-                      if (params.value === 1) {
+                      if (params.value === true) {
                         return t("AddToStock.discountPercentage");
                       }
                       return t("AddToStock.discountFlat");

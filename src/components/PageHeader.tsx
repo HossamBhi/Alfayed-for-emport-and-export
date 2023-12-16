@@ -35,7 +35,7 @@ const PageHeader = ({
     >
       {!isShowMenu && <AppLogo className="!mb-0 me-4 !inline md:!hidden" />}
       {title && (
-        <h2 className="flex-1 text-sm text-black md:text-lg">
+        <h2 className="flex-1 text-md font-bold text-black md:text-lg">
           {t(`menu.${title}`)}
         </h2>
       )}
