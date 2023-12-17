@@ -7,6 +7,7 @@ import Provider from "./Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "الفايد للاستيراد والتصدير",
   description: "الفايد للاستيراد والتصدير",
 };
