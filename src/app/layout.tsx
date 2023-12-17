@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   title: "الفايد للاستيراد والتصدير",
   description: "الفايد للاستيراد والتصدير",
+  icons: {apple: "/icon-512x512.png"},
+  themeColor: "#fff"
 };
 
 export default function RootLayout({
