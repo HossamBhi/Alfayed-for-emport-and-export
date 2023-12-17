@@ -24,7 +24,7 @@ const PageHeader = ({
   }
 
   return (
-    <div
+    <header
       className={`flex min-h-[48px] flex-1 items-center bg-white px-4 py-2 md:bg-transparent md:px-4 ${
         title
           ? "justify-between"
@@ -35,7 +35,7 @@ const PageHeader = ({
     >
       {!isShowMenu && <AppLogo className="!mb-0 me-4 !inline md:!hidden" />}
       {title && (
-        <h2 className="flex-1 text-md font-bold text-black md:text-lg">
+        <h2 className="text-md flex-1 font-bold text-black md:text-lg">
           {t(`menu.${title}`)}
         </h2>
       )}
@@ -57,7 +57,7 @@ const PageHeader = ({
         />
       )}
       {/* <h2 className="text-black text-sm md:text-lg">Welcome {profile?.name}</h2> */}
-    </div>
+    </header>
   );
 };
 

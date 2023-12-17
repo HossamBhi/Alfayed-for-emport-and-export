@@ -6,7 +6,16 @@
   box-sizing: border-box;
 }
 @layer base {
-  :root {
+  html {
+    --color-primary: #5b9d67;
+    --color-primary-light: #d7f9db;
+    --color-primary-dark: #266937;
+    --color-secondary: #70a6ff;
+    --color-background: #f3f4f6;
+    --color-background-card: #ffffff;
+    --color-text: #000000;
+  }
+  /* :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
@@ -59,8 +68,10 @@
       --color-surface-disabled: 231, 225, 229, 0.12;
       --color-on-surface-disabled: 231, 225, 229, 0.38;
     }
-  }
+  } */
 }
+@import "./darkTheme.css";
+
 body {
   color: rgb(var(--color-text));
   /* color: rgb(var(--foreground-rgb));

@@ -4,10 +4,11 @@ import { SIDEMENU_LINKS } from "@/utils/helper";
 import { Box, useTheme } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ComponentProps } from "react";
+import { ComponentProps, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCanadianMapleLeaf } from "react-icons/fa";
 import { CustomButton } from "./common";
+import { MdDarkMode } from "react-icons/md";
 
 export const AppLogo = ({
   className = "",
@@ -39,13 +40,17 @@ const SideMenu = ({
   const {
     palette: { primary },
   } = useTheme();
+  const [theme, setTheme] = useState("dark");
   const handleChangeLanugage = () => {
     i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar");
+  };
+  const changeTheme = (theme: string) => {
+    document.querySelector("html")?.setAttribute("data-theme", theme);
   };
 
   // if (pathname.includes("/login")) {
   //   return (
-  //     <div className="fixed flex h-screen w-20 flex-col justify-between bg-gray-100 p-4"></div>
+  //     <div className="fixed flex h-screen w-20 flex-col justify-between bg-background p-4"></div>
   //   );
   // }
   return (
@@ -79,13 +84,13 @@ const SideMenu = ({
                 <li key={url + " " + i}>
                   <Link
                     href={url}
-                    // className={`mb-4 flex w-full flex-1 cursor-pointer items-center rounded-sm bg-gray-100 px-2 py-1 hover:bg-gray-200 md:px-3 md:py-2 ${
+                    // className={`mb-4 flex w-full flex-1 cursor-pointer items-center rounded-sm bg-background px-2 py-1 hover:bg-gray-200 md:px-3 md:py-2 ${
                     //   pathname === url
                     //     ? "bg-blue-200 hover:bg-blue-100"
                     //     : "text-black"
                     // }`}
                     onClick={() => setIsShowMenu(false)}
-                    className={`group flex items-center rounded-lg bg-gray-200 p-2 text-gray-900 hover:bg-gray-100    ${
+                    className={`group flex items-center rounded-lg bg-background p-2 text-gray-900 hover:bg-background ${
                       pathname === url
                         ? "!bg-blue-400 text-white hover:bg-blue-100"
                         : "text-black"
@@ -112,11 +117,19 @@ const SideMenu = ({
           <CustomButton
             // leftIcon={<HiOutlineLanguage />}
             onClick={handleChangeLanugage}
-            className={`!mt-4 inline-block cursor-pointer rounded-lg bg-gray-100  p-3 text-sm font-bold hover:bg-gray-200 ${"bg-blue-200 text-primary hover:bg-blue-100"}`}
+            className={`!mt-4 inline-block cursor-pointer rounded-lg bg-background p-3 text-sm font-bold hover:bg-blue-100`}
           >
             {LANGUAGES.find((lang) => lang.code === i18n.language)?.label ||
               LANGUAGES[0].label}
           </CustomButton>
+          {/* <CustomButton
+            onClick={() => {
+              changeTheme(theme);
+            }}
+            className={`!mt-4 w-fit cursor-pointer rounded-lg bg-background p-3 text-sm font-bold hover:bg-blue-100`}
+          >
+            <MdDarkMode size="24" />
+          </CustomButton> */}
         </div>
       </aside>
     </>

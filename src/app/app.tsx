@@ -91,7 +91,7 @@ const App = ({ children }: { children: ReactNode }) => {
               {/* <div className="z-20"> */}
               <SideMenu isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu} />
               {/* </div> */}
-              <div className={`w-full bg-gray-100`}>
+              <div className={`w-full bg-background`}>
                 {isLoad && (
                   <div className="w-full rounded">
                     <LinearProgress className="rounded" />

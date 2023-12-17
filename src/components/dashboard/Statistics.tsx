@@ -17,7 +17,7 @@ const Statistics = () => {
   const StatisticCard = useCallback(
     ({ price, Icon, label, color }: StatisticCardProps) => {
       return (
-        <div className="flex items-center justify-between rounded-lg bg-white px-2 py-2 md:px-4 md:py-4">
+        <div className="bg-background-card flex items-center justify-between rounded-lg px-2 py-2 md:px-4 md:py-4">
           <div className="flex w-full flex-col">
             <p
               className={`text-lg font-bold md:text-2xl text-${color}-600 pb-2`}
